@@ -14,15 +14,15 @@ public class Restaurant {
     private String address;
     @OneToOne
     @JoinColumn(name = "id_admin", referencedColumnName="id_user")
-    private User user;
+    private User admin;
 
     public Restaurant() {
     }
 
-    public Restaurant(Long id, String address, User user) {
+    public Restaurant(Long id, String address, User admin) {
         this.id = id;
         this.address = address;
-        this.user = user;
+        this.admin = admin;
     }
 
     public Long getId() {
@@ -41,11 +41,11 @@ public class Restaurant {
         this.address = address;
     }
 
-    public User getUser() {
-        return user;
+    public User getAdmin() {
+        return admin;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setAdmin(User user) {
+        this.admin = user;
     }
 }
