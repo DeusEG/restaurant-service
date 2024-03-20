@@ -8,6 +8,7 @@ public class TableData {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_table")
     private Long id;
 
     @Column(name = "table_type")

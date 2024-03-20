@@ -9,6 +9,7 @@ public class Role {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_role")
     private Long id;
 
     @Column(name = "name", nullable = false, unique = true)

@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
 public class Reservation {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_reservation")
     private Long id;
 
     @Column(name = "date_time", nullable = false)

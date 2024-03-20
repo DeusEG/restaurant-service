@@ -1,7 +1,6 @@
 package com.deus.restaurantservice.model;
 
 import javax.persistence.*;
-import javax.persistence.Table;
 
 
 @Entity
@@ -9,20 +8,21 @@ import javax.persistence.Table;
 public class Restaurant {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_restaurant")
     private Long id;
     @Column(name = "address", nullable = false, unique = true)
     private String address;
     @OneToOne
     @JoinColumn(name = "id_admin", referencedColumnName="id_user")
-    private User fromUser;
+    private User user;
 
     public Restaurant() {
     }
 
-    public Restaurant(Long id, String address, User fromUser) {
+    public Restaurant(Long id, String address, User user) {
         this.id = id;
         this.address = address;
-        this.fromUser = fromUser;
+        this.user = user;
     }
 
     public Long getId() {
@@ -41,11 +41,11 @@ public class Restaurant {
         this.address = address;
     }
 
-    public User getFromUser() {
-        return fromUser;
+    public User getUser() {
+        return user;
     }
 
-    public void setFromUser(User fromUser) {
-        this.fromUser = fromUser;
+    public void setUser(User user) {
+        this.user = user;
     }
 }
