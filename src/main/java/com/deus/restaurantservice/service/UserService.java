@@ -1,8 +1,6 @@
 package com.deus.restaurantservice.service;
 
-import com.deus.restaurantservice.model.Restaurant;
 import com.deus.restaurantservice.model.User;
-import com.deus.restaurantservice.repository.RestaurantRepository;
 import com.deus.restaurantservice.repository.UserRepository;
 import org.springframework.stereotype.Service;
 

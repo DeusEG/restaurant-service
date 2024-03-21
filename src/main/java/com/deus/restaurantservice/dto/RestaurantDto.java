@@ -2,7 +2,6 @@ package com.deus.restaurantservice.dto;
 
 import com.deus.restaurantservice.model.User;
 
-
 public class RestaurantDto {
     private Long id;
     private String address;
