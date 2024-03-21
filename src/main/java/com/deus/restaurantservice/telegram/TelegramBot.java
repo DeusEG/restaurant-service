@@ -1,14 +1,16 @@
 package com.deus.restaurantservice.telegram;
 
-import com.deus.restaurantservice.model.Restaurant;
-import com.deus.restaurantservice.service.RestaurantService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.deus.restaurantservice.model.User;
+import com.deus.restaurantservice.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
+import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
+
+import java.util.Objects;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
@@ -16,10 +18,10 @@ public class TelegramBot extends TelegramLongPollingBot {
     private String BOT_NAME;
     @Value("${bot.token}")
     private String BOT_TOKEN;
-    private final RestaurantService restaurantService;
+    private final UserService userService;
 
-    public TelegramBot(RestaurantService restaurantService) {
-        this.restaurantService = restaurantService;
+    public TelegramBot(UserService userService) {
+        this.userService = userService;
     }
 
     @Override
@@ -37,11 +39,26 @@ public class TelegramBot extends TelegramLongPollingBot {
     public void onUpdateReceived(Update update) {
         var originalMessage = update.getMessage();
         Long idChat = update.getMessage().getChatId();
-        String userName = originalMessage.getFrom().getUserName();
-        System.out.println(userName);
+        String userTgName = originalMessage.getFrom().getUserName();
+        System.out.println(userTgName);
+        User user = checkUserExist(originalMessage);
+        if (Objects.isNull(user)) {
+            sendMessage(idChat, "Пользователь " + userTgName + " не зарегистрирован");
+        } else {
+            sendMessage(idChat, "Хей хо");
+        }
+    }
 
 
-        sendMessage(idChat, "Пользователь " + userName + " не зарегистрирован");
+    private User checkUserExist(Message message) {
+        String userTgName = message.getFrom().getUserName();
+        var userList = userService.getAllUser();
+        for (User user : userList) {
+            if (user.getTelegram().equals(userTgName)) {
+                return user;
+            }
+        }
+        return null;
     }
 
     public void sendMessage(Long idChat, String message) {
