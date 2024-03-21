@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Restaurants</title>
+</head>
+<body>
+<div>
+    <h1>Restaurants</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Address</th>
+            <th>Administrator</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="restaurants : ${restaurant}">
+            <td th:text="${restaurants.getAddress()}"></td>
+            <td th:text="${restaurants.getAdmin().getName()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

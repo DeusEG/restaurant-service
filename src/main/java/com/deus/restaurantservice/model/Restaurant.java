@@ -1,6 +1,7 @@
 package com.deus.restaurantservice.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 
 @Entity
@@ -47,5 +48,27 @@ public class Restaurant {
 
     public void setAdmin(User user) {
         this.admin = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Restaurant that = (Restaurant) o;
+        return Objects.equals(id, that.id) && Objects.equals(address, that.address) && Objects.equals(admin, that.admin);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, address, admin);
+    }
+
+    @Override
+    public String toString() {
+        return "Restaurant{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", admin=" + admin.getName() +
+                '}';
     }
 }

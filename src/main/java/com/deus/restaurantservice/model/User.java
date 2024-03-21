@@ -2,6 +2,7 @@ package com.deus.restaurantservice.model;
 
 import javax.persistence.*;
 import javax.persistence.Table;
+import java.util.Objects;
 
 @Entity
 @Table(name = "user_data")
@@ -68,5 +69,29 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return Objects.equals(id_user, user.id_user) && Objects.equals(name, user.name) && Objects.equals(telegram, user.telegram) && Objects.equals(role, user.role) && Objects.equals(password, user.password);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id_user, name, telegram, role, password);
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id_user=" + id_user +
+                ", name='" + name + '\'' +
+                ", telegram='" + telegram + '\'' +
+                ", role=" + role +
+                ", password='" + password + '\'' +
+                '}';
     }
 }
