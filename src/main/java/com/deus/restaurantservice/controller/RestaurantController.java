@@ -22,4 +22,6 @@ public class RestaurantController {
         model.addAttribute("restaurant", restaurantService.getAllRestaurant());
         return "restaurant-info-list";
     }
+
+
 }
