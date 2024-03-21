@@ -14,7 +14,7 @@ public class RestaurantService {
     @Autowired
     private RestaurantRepository restaurantRepository;
 
-    public List<Restaurant> getAllUsers() {
+    public List<Restaurant> getAllRestaurant() {
         return restaurantRepository.findAll();
     }
 }
