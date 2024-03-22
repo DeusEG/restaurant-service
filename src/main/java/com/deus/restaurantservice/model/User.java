@@ -24,7 +24,13 @@ public class User {
     }
 
     public User(Long id_user, String name, String telegram, Role role, String password) {
-        this.id_user = id_user;
+        this.name = name;
+        this.telegram = telegram;
+        this.role = role;
+        this.password = password;
+    }
+
+    public User(String name, String telegram, Role role, String password) {
         this.name = name;
         this.telegram = telegram;
         this.role = role;

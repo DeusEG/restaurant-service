@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registration</title>
+</head>
+<body>
+<form class="box" method="post" th:action="registration">
+    <h1>Регистрация</h1>
+    <input type="text" placeholder="Введите имя" name="name">
+    <input type="text" placeholder="Введите телеграм" name="telegram">
+    <input type="password" placeholder="Введите пароль" name="password">
+    <button type="submit">Sign up</button>
+</form>
+<form method="get" action="/login" class="reg">
+    <button type="submit">Sign in</button>
+</form>
+</body>
+</html>
