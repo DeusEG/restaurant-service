@@ -24,7 +24,7 @@ public class UserController {
 
     @PostMapping()
     public String createUser(String name, String telegram, String password) {
-        if (userService.fiByTelegram(telegram) != null) {
+        if (userService.findByTelegram(telegram) != null) {
             return "/registration";
         }
         userService.addUser(name, telegram, password);

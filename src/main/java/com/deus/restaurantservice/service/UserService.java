@@ -23,12 +23,12 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User fiByTelegram(String telegram) {
+    public User findByTelegram(String telegram) {
         return userRepository.findByTelegram(telegram);
     }
 
     public User addUser(String name, String telegram, String password) {
-        User newUser =  new User(name, telegram, roleRepository.findByName("Модератор"), password);
+        User newUser =  new User(name, telegram, roleRepository.findByName("USER"), password);
         userRepository.save(newUser);
         return newUser;
     }
