@@ -28,7 +28,7 @@ public class UserService {
     }
 
     public User addUser(String name, String telegram, String password) {
-        User newUser =  new User(name, telegram, roleRepository.findByName("Модератор"), password);
+        User newUser =  new User(name, telegram, roleRepository.findByName("USER"), password);
         userRepository.save(newUser);
         return newUser;
     }
