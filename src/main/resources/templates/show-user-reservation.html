@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Ваши бронирования</title>
+</head>
+<body>
+<table>
+    <thead>
+    <tr>
+        <th>Номер столика</th>
+        <th>Адрес ресторана</th>
+        <th>Время</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="reservation : ${reservations}">
+        <td th:text="${reservation.getTable().getId()}"></td>
+        <td th:text="${reservation.getTable().getRestaurant().getAddress()}"></td>
+        <td th:text="${reservation.getDateTime().format()}"></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

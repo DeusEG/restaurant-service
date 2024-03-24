@@ -20,13 +20,13 @@ public class ModerController {
     @GetMapping()
     public String showModerPanel(Model model) {
         model.addAttribute("users", userService.getAllUser());
-        return "/showUsers";
+        return "show-users";
     }
 
-    @GetMapping("/user/{username}/delete")
+    @GetMapping("/{username}/delete")
     public String deleteUser(@PathVariable String username) {
         String telegram = userService.deleteByTelegram(username);
         System.out.println("Пользователь с телеграмом: " + telegram + " удален");
-        return "redirect:/showUsers";
+        return "redirect:/moder";
     }
 }

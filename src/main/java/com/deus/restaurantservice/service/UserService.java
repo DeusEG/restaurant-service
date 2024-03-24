@@ -31,6 +31,7 @@ public class UserService {
         return userRepository.findByTelegram(telegram);
     }
 
+
     @Transactional
     public String deleteByTelegram(String telegram) {
         return userRepository.removeByTelegram(telegram);
