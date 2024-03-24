@@ -18,13 +18,6 @@
         <tr th:each="restaurants : ${restaurant}">
             <td th:text="${restaurants.getAddress()}"></td>
             <td th:text="${restaurants.getAdmin().getName()}"></td>
-            <td>
-                <div>
-                    <form method="get" th:action="@{|/moder/user/${user.getTelegram()}/delete|}">
-                        <button type="submit">Забронировать</button>
-                    </form>
-                </div>
-            </td>
         </tr>
         </tbody>
     </table>
