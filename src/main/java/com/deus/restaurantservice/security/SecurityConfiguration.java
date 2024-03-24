@@ -24,14 +24,17 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsService)
                 .passwordEncoder(passwordEncoder());
     }
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         String adminRole = "ADMIN";
         String userRole = "USER";
+        String moderRole = "MODER";
 
         http
                 .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/moder/**").hasRole(moderRole)
                 .antMatchers("/registration").permitAll()
                 .anyRequest().authenticated()
                 .and()

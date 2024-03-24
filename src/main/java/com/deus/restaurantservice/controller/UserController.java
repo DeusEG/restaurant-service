@@ -2,7 +2,6 @@ package com.deus.restaurantservice.controller;
 
 import com.deus.restaurantservice.service.UserService;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,7 +17,7 @@ public class UserController {
     }
 
     @GetMapping()
-    public String getRegistration(Model model) {
+    public String getRegistration() {
         return "/registration";
     }
 
@@ -27,7 +26,7 @@ public class UserController {
         if (userService.findByTelegram(telegram) != null) {
             return "/registration";
         }
-        userService.addUser(name, telegram, password);
+        userService.createUser(name, telegram, password);
         return "redirect:/login";
     }
 }
