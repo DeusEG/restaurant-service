@@ -11,8 +11,11 @@ public class TableData {
     @Column(name = "id_table")
     private Long id;
 
-    @Column(name = "table_type")
-    private String tableType;
+    @Column(name = "comment")
+    private String comment;
+
+    @Column(name = "number_of_seats")
+    private Integer numberOfSeats;
 
     @ManyToOne
     @JoinColumn(name = "id_restaurant", referencedColumnName = "id_restaurant")
@@ -21,12 +24,12 @@ public class TableData {
     public TableData() {
     }
 
-    public TableData(Long id, String tableType, Restaurant restaurant) {
+    public TableData(Long id, String comment, Integer numberOfSeats, Restaurant restaurant) {
         this.id = id;
-        this.tableType = tableType;
+        this.comment = comment;
         this.restaurant = restaurant;
+        this.numberOfSeats = numberOfSeats;
     }
-
 
     public Long getId() {
         return id;
@@ -36,12 +39,20 @@ public class TableData {
         this.id = id;
     }
 
-    public String getTableType() {
-        return tableType;
+    public String getComment() {
+        return comment;
     }
 
-    public void setTableType(String tableType) {
-        this.tableType = tableType;
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public Integer getNumberOfSeats() {
+        return numberOfSeats;
+    }
+
+    public void setNumberOfSeats(Integer numberOfSeats) {
+        this.numberOfSeats = numberOfSeats;
     }
 
     public Restaurant getRestaurant() {
