@@ -10,6 +10,7 @@
     <tr>
         <th>Номер столика</th>
         <th>Адрес ресторана</th>
+        <th>Дата</th>
         <th>Время</th>
     </tr>
     </thead>
@@ -17,7 +18,8 @@
     <tr th:each="reservation : ${reservations}">
         <td th:text="${reservation.getTable().getId()}"></td>
         <td th:text="${reservation.getTable().getRestaurant().getAddress()}"></td>
-        <td th:text="${reservation.getDateTime().format()}"></td>
+        <td th:text="${reservation.getDate()}"></td>
+        <td th:text="${reservation.getTime()}"></td>
     </tr>
     </tbody>
 </table>

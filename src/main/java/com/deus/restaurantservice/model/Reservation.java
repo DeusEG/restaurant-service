@@ -1,7 +1,8 @@
 package com.deus.restaurantservice.model;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Entity
 @Table(name = "reservation")
@@ -11,8 +12,10 @@ public class Reservation {
     @Column(name = "id_reservation")
     private Long id;
 
-    @Column(name = "date_time", nullable = false)
-    private LocalDateTime dateTime;
+    @Column(name = "date", nullable = false)
+    private LocalDate date;
+    @Column(name = "time", nullable = false)
+    private LocalTime time;
 
     @OneToOne
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
@@ -24,9 +27,10 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(Long id, LocalDateTime dateTime, User user, TableData table) {
+    public Reservation(Long id, LocalDate date, LocalTime time, User user, TableData table) {
         this.id = id;
-        this.dateTime = dateTime;
+        this.date = date;
+        this.time = time;
         this.user = user;
         this.table = table;
     }
@@ -39,12 +43,20 @@ public class Reservation {
         this.id = id;
     }
 
-    public LocalDateTime getDateTime() {
-        return dateTime;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setDateTime(LocalDateTime dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public LocalTime getTime() {
+        return time;
+    }
+
+    public void setTime(LocalTime time) {
+        this.time = time;
     }
 
     public User getUser() {
