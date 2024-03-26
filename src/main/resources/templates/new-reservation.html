@@ -5,6 +5,23 @@
     <title>Бронирование</title>
 </head>
 <body>
-
+<div>
+    <form method="post">
+        <h1>Новое бронирование</h1>
+        <p>
+            <label for="table">Выберите столик:</label>
+            <select  id="table" name="table">
+                <option th:each="table : ${tables}" th:value="${table.getId()}" th:text="${table.getId()}" ></option>
+            </select>
+        </p>
+        <p><input type="date" placeholder="выберите дату" name="date"></p>
+        <p><input type="time" placeholder="выберите время" name="time"></p>
+        <p><textarea name="comment" cols="40" rows="3"></textarea></p>
+        <button type="submit">Забронировать</button>
+    </form>
+</div>
+<form method="get" action="/restaurant/show">
+    <button type="submit">Перейти к списку рестаранов</button>
+</form>
 </body>
 </html>

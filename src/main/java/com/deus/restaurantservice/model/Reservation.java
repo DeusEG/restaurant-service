@@ -12,28 +12,40 @@ public class Reservation {
     @Column(name = "id_reservation")
     private Long id;
 
-    @Column(name = "date", nullable = false)
+    @Column(name = "date")
     private LocalDate date;
-    @Column(name = "time", nullable = false)
+    @Column(name = "time")
     private LocalTime time;
 
-    @OneToOne
+    @Column(name = "comment")
+    private String comment;
+
+    @ManyToOne()
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
     private User user;
-    @OneToOne
+    @ManyToOne()
     @JoinColumn(name = "id_table", referencedColumnName = "id_table")
     private TableData table;
 
     public Reservation() {
     }
 
-    public Reservation(Long id, LocalDate date, LocalTime time, User user, TableData table) {
-        this.id = id;
+    public Reservation(User user, TableData table, LocalDate date, LocalTime time, String comment) {
         this.date = date;
         this.time = time;
+        this.comment = comment;
         this.user = user;
         this.table = table;
     }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
 
     public Long getId() {
         return id;

@@ -1,6 +1,7 @@
 package com.deus.restaurantservice.model;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(name = "table_data")
@@ -10,9 +11,6 @@ public class TableData {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_table")
     private Long id;
-
-    @Column(name = "comment")
-    private String comment;
 
     @Column(name = "number_of_seats")
     private Integer numberOfSeats;
@@ -26,7 +24,6 @@ public class TableData {
 
     public TableData(Long id, String comment, Integer numberOfSeats, Restaurant restaurant) {
         this.id = id;
-        this.comment = comment;
         this.restaurant = restaurant;
         this.numberOfSeats = numberOfSeats;
     }
@@ -39,13 +36,6 @@ public class TableData {
         this.id = id;
     }
 
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
 
     public Integer getNumberOfSeats() {
         return numberOfSeats;
@@ -61,5 +51,27 @@ public class TableData {
 
     public void setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TableData tableData = (TableData) o;
+        return Objects.equals(id, tableData.id) && Objects.equals(numberOfSeats, tableData.numberOfSeats) && Objects.equals(restaurant, tableData.restaurant);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, numberOfSeats, restaurant);
+    }
+
+    @Override
+    public String toString() {
+        return "TableData{" +
+                "id=" + id +
+                ", numberOfSeats=" + numberOfSeats +
+                ", restaurant=" + restaurant +
+                '}';
     }
 }

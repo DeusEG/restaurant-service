@@ -2,25 +2,33 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Restaurants</title>
+    <title>Рестораны</title>
 </head>
 <body>
 <div>
-    <h1>Restaurants</h1>
+    <h1>Рестораны</h1>
     <table>
         <thead>
         <tr>
-            <th>Address</th>
-            <th>Administrator</th>
+            <th>Адрес</th>
+            <th>Администратор</th>
         </tr>
         </thead>
         <tbody>
-        <tr th:each="restaurants : ${restaurant}">
-            <td th:text="${restaurants.getAddress()}"></td>
-            <td th:text="${restaurants.getAdmin().getName()}"></td>
+        <tr th:each="restaurant : ${restaurants}">
+            <td th:text="${restaurant.getAddress()}"></td>
+            <td th:text="${restaurant.getAdmin().getName()}"></td>
+            <td>
+                <div>
+                    <form method="get" th:action="@{|/reservation/${restaurant.getId()}|}">
+                        <button type="submit">Забронировать столик</button>
+                    </form>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>
+
 </div>
 </body>
 </html>

@@ -2,11 +2,15 @@ package com.deus.restaurantservice.service;
 
 import com.deus.restaurantservice.model.Reservation;
 import com.deus.restaurantservice.model.Restaurant;
+import com.deus.restaurantservice.model.TableData;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.ReservationRepository;
 import com.deus.restaurantservice.repository.RestaurantRepository;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 @Service
@@ -20,6 +24,12 @@ public class ReservationService {
 
     public List<Reservation> getAllReservationByUser(User user) {
         return reservationRepository.findAllByUser(user);
+    }
+
+    public Reservation createReservation(User user, TableData table, LocalDate date, LocalTime time, String comment) {
+        Reservation reservation =  new Reservation(user, table, date, time, comment);
+        reservationRepository.save(reservation);
+        return reservation;
     }
 
 }

@@ -18,4 +18,8 @@ public class RestaurantService {
     public List<Restaurant> getAllRestaurant() {
         return restaurantRepository.findAll();
     }
+
+    public Restaurant getRestaurantById(Long id) {
+        return restaurantRepository.getRestaurantById(id);
+    }
 }

@@ -2,18 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Registration</title>
+    <title>Регистрация</title>
 </head>
 <body>
-<form method="post" th:action="registration">
+<form method="post">
     <h1>Регистрация</h1>
     <input type="text" placeholder="Введите имя" name="name">
     <input type="text" placeholder="Введите телеграм" name="telegram">
     <input type="password" placeholder="Введите пароль" name="password">
-    <button type="submit">Sign up</button>
+    <button type="submit">Зарегистрироваться</button>
 </form>
 <form method="get" action="/login">
-    <button type="submit">Sign in</button>
+    <button type="submit">Войти</button>
 </form>
 </body>
 </html>

@@ -23,10 +23,9 @@ public class ModerController {
         return "show-users";
     }
 
-    @GetMapping("/{username}/delete")
-    public String deleteUser(@PathVariable String username) {
-        String telegram = userService.deleteByTelegram(username);
-        System.out.println("Пользователь с телеграмом: " + telegram + " удален");
+    @GetMapping("/{telegram}/delete")
+    public String deleteUser(@PathVariable String telegram) {
+        userService.deleteByTelegram(telegram);
         return "redirect:/moder";
     }
 }

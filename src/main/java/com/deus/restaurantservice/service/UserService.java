@@ -38,9 +38,9 @@ public class UserService {
     }
 
     public User createUser(String name, String telegram, String password) {
-        User newUser =  new User(name, telegram, roleRepository.findByName("USER"),
+        User user =  new User(name, telegram, roleRepository.findByName("USER"),
                 passwordEncoder.encode(password));
-        userRepository.save(newUser);
-        return newUser;
+        userRepository.save(user);
+        return user;
     }
 }
