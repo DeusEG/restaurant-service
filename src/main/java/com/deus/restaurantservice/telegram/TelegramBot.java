@@ -1,6 +1,8 @@
 package com.deus.restaurantservice.telegram;
 
+import com.deus.restaurantservice.model.Reservation;
 import com.deus.restaurantservice.model.User;
+import com.deus.restaurantservice.service.ReservationService;
 import com.deus.restaurantservice.service.UserService;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -10,6 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.List;
 import java.util.Objects;
 
 @Component
@@ -19,9 +22,11 @@ public class TelegramBot extends TelegramLongPollingBot {
     @Value("${bot.token}")
     private String BOT_TOKEN;
     private final UserService userService;
+    private final ReservationService reservationService;
 
-    public TelegramBot(UserService userService) {
+    public TelegramBot(UserService userService, ReservationService reservationService) {
         this.userService = userService;
+        this.reservationService = reservationService;
     }
 
     @Override
@@ -40,12 +45,18 @@ public class TelegramBot extends TelegramLongPollingBot {
         var originalMessage = update.getMessage();
         Long idChat = update.getMessage().getChatId();
         String userTgName = originalMessage.getFrom().getUserName();
-        System.out.println(userTgName);
         User user = checkUserExist(originalMessage);
+        List<Reservation> reservations = reservationService.getAllReservationByUser(user);
         if (Objects.isNull(user)) {
             sendMessage(idChat, "Пользователь " + userTgName + " не зарегистрирован");
         } else {
-            sendMessage(idChat, "Хей хо");
+            if (update.getMessage().getText().equals("Брони")) {
+                for (Reservation reservation : reservations) {
+                    sendMessage(idChat, "Ресторан: " + reservation.getTable().getRestaurant().getAddress() +
+                            " Дата " + reservation.getDate() +
+                            " Время " + reservation.getTime());
+                }
+            }
         }
     }
 
@@ -61,7 +72,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         return null;
     }
 
-    public void sendMessage(Long idChat, String message) {
+    private void sendMessage(Long idChat, String message) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(idChat);
         sendMessage.setText(message);

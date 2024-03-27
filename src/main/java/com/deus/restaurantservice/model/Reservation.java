@@ -86,4 +86,16 @@ public class Reservation {
     public void setTable(TableData table) {
         this.table = table;
     }
+
+    @Override
+    public String toString() {
+        return "Reservation{" +
+                "id=" + id +
+                ", date=" + date +
+                ", time=" + time +
+                ", comment='" + comment + '\'' +
+                ", user=" + user +
+                ", table=" + table +
+                '}';
+    }
 }
