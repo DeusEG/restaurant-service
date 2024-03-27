@@ -4,7 +4,7 @@ import com.deus.restaurantservice.model.Reservation;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.service.ReservationService;
 import com.deus.restaurantservice.service.UserService;
-import org.springframework.beans.factory.annotation.Value;
+import com.deus.restaurantservice.utils.DateTimeUtils;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
@@ -14,6 +14,8 @@ import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
 import java.util.List;
 import java.util.Objects;
+
+import static com.deus.restaurantservice.utils.DateTimeUtils.*;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
@@ -51,8 +53,8 @@ public class TelegramBot extends TelegramLongPollingBot {
             if (update.getMessage().getText().equals("Брони")) {
                 for (Reservation reservation : reservations) {
                     sendMessage(idChat, "Ресторан: " + reservation.getTable().getRestaurant().getAddress() +
-                            " Дата " + reservation.getDate() +
-                            " Время " + reservation.getTime());
+                            " Дата " + getDateFromDateTime(reservation.getDateTime()) +
+                            " Время " + getTimeFromDateTime(reservation.getDateTime()));
                 }
             }
         }

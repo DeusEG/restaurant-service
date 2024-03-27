@@ -18,7 +18,7 @@
     <tr th:each="reservation : ${reservations}">
         <td th:text="${reservation.getTable().getId()}"></td>
         <td th:text="${reservation.getTable().getRestaurant().getAddress()}"></td>
-        <td th:text="${reservation.getDate()}"></td>
+        <td th:text="${reservation.getDateTime()}"></td>
         <td th:text="${reservation.getTime()}"></td>
     </tr>
     </tbody>

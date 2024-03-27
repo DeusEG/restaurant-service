@@ -56,13 +56,8 @@ public class ReservationController {
     @PostMapping("/{restaurantId}")
     public String createNewReservation(String date, String time, String comment, Long table,
                                        HttpSession session) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime localTime = LocalTime.parse(time, timeFormatter);
-        var tableData = tableDataService.getTableById(table);
         User user = (User) session.getAttribute("user");
-        reservationService.createReservation(user, tableData, localDate, localTime, comment);
+        reservationService.createReservation(user, table, date, time, comment);
         return "redirect:/reservation/show";
     }
 }

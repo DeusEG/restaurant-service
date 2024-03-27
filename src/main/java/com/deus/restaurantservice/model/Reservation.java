@@ -2,6 +2,7 @@ package com.deus.restaurantservice.model;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 @Entity
@@ -12,10 +13,8 @@ public class Reservation {
     @Column(name = "id_reservation")
     private Long id;
 
-    @Column(name = "date")
-    private LocalDate date;
-    @Column(name = "time")
-    private LocalTime time;
+    @Column(name = "date_time")
+    private LocalDateTime dateTime;
 
     @Column(name = "comment")
     private String comment;
@@ -30,22 +29,12 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(User user, TableData table, LocalDate date, LocalTime time, String comment) {
-        this.date = date;
-        this.time = time;
+    public Reservation(User user, TableData table, LocalDateTime dateTime, String comment) {
+        this.dateTime = dateTime;
         this.comment = comment;
         this.user = user;
         this.table = table;
     }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
 
     public Long getId() {
         return id;
@@ -55,20 +44,20 @@ public class Reservation {
         this.id = id;
     }
 
-    public LocalDate getDate() {
-        return date;
+    public LocalDateTime getDateTime() {
+        return dateTime;
     }
 
-    public void setDate(LocalDate date) {
-        this.date = date;
+    public void setDateTime(LocalDateTime dateTime) {
+        this.dateTime = dateTime;
     }
 
-    public LocalTime getTime() {
-        return time;
+    public String getComment() {
+        return comment;
     }
 
-    public void setTime(LocalTime time) {
-        this.time = time;
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 
     public User getUser() {
@@ -91,8 +80,7 @@ public class Reservation {
     public String toString() {
         return "Reservation{" +
                 "id=" + id +
-                ", date=" + date +
-                ", time=" + time +
+                ", dateTime=" + dateTime +
                 ", comment='" + comment + '\'' +
                 ", user=" + user +
                 ", table=" + table +
