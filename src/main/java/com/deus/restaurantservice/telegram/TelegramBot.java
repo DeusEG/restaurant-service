@@ -17,10 +17,8 @@ import java.util.Objects;
 
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
-    @Value("${bot.name}")
-    private String BOT_NAME;
-    @Value("${bot.token}")
-    private String BOT_TOKEN;
+    private final String BOT_NAME = "restaurant_deus_bot";
+    private final String BOT_TOKEN = System.getenv("token");
     private final UserService userService;
     private final ReservationService reservationService;
 
