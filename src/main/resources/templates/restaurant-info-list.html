@@ -25,6 +25,13 @@
                     </form>
                 </div>
             </td>
+            <td>
+                <div>
+                    <form method="get" th:action="@{|/restaurant/${restaurant.getId()}|}">
+                        <button type="submit">Посмотреть комментарии</button>
+                    </form>
+                </div>
+            </td>
         </tr>
         </tbody>
     </table>

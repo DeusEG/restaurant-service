@@ -23,8 +23,7 @@ public class Comment {
     public Comment() {
     }
 
-    public Comment(Long id, User user, Restaurant restaurant, String comment) {
-        this.id = id;
+    public Comment(User user, Restaurant restaurant, String comment) {
         this.user = user;
         this.restaurant = restaurant;
         this.comment = comment;

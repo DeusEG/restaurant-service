@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Комментарии</title>
+</head>
+<body>
+<h1>Добавить комментарий</h1>
+<div>
+    <form method="post">
+        <p><label for="comment">Введите ваш комментарий:</label></p>
+        <p><textarea id="comment" name="comment" rows="4" cols="50"></textarea></p>
+        <p>
+            <button type="submit">Добавить комментарий</button>
+        </p>
+    </form>
+</div>
+<div>
+    <h2>Комментарии других пользователей</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Комментарий</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : ${comments}">
+            <td th:text="${comment.getUser().getName()}"></td>
+            <td th:text="${comment.getComment()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
