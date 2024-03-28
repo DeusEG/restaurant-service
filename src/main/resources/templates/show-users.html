@@ -20,7 +20,7 @@
         <td th:text="${{user.getRole().getName()}}"/>
         <td>
             <div>
-                <form method="get" th:action="@{|/moder/${user.getTelegram()}/delete|}">
+                <form th:method="DELETE" th:action="@{|/moder/${user.getTelegram()}|}">
                     <button type="submit">Удалить</button>
                 </form>
             </div>

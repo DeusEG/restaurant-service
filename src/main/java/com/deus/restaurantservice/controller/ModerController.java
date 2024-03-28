@@ -3,6 +3,7 @@ package com.deus.restaurantservice.controller;
 import com.deus.restaurantservice.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,7 +24,7 @@ public class ModerController {
         return "show-users";
     }
 
-    @GetMapping("/{telegram}/delete")
+    @DeleteMapping("/{telegram}")
     public String deleteUser(@PathVariable String telegram) {
         userService.deleteByTelegram(telegram);
         return "redirect:/moder";

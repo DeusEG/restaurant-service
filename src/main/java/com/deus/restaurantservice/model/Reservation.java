@@ -1,5 +1,8 @@
 package com.deus.restaurantservice.model;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -21,6 +24,7 @@ public class Reservation {
 
     @ManyToOne()
     @JoinColumn(name = "id_user", referencedColumnName = "id_user")
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private User user;
     @ManyToOne()
     @JoinColumn(name = "id_table", referencedColumnName = "id_table")
