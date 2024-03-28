@@ -22,7 +22,7 @@ public class CommentService {
     }
 
     public Comment createComment(User user, Restaurant restaurant, String commentText) {
-        Comment comment =  new Comment(user, restaurant, commentText);
+        Comment comment = new Comment(user, restaurant, commentText);
         commentRepository.save(comment);
         return comment;
     }

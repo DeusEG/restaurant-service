@@ -50,7 +50,7 @@ public class TelegramBot extends TelegramLongPollingBot {
         if (Objects.isNull(user)) {
             sendMessage(idChat, "Пользователь " + userTgName + " не зарегистрирован");
         } else {
-            if (update.getMessage().getText().equals("Брони")) {
+            if (update.getMessage().getText().equals("Мои бронирования")) {
                 for (Reservation reservation : reservations) {
                     sendMessage(idChat, "Ресторан: " + reservation.getTable().getRestaurant().getAddress() +
                             " Дата " + getDateFromDateTime(reservation.getDateTime()) +

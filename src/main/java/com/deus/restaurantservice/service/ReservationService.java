@@ -7,6 +7,7 @@ import com.deus.restaurantservice.model.TableData;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.ReservationRepository;
 import com.deus.restaurantservice.repository.RestaurantRepository;
+import com.deus.restaurantservice.utils.DateTimeUtils;
 import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
@@ -34,12 +35,8 @@ public class ReservationService {
     }
 
     public Reservation createReservation(User user, Long table, String date, String time, String comment) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate localDate = LocalDate.parse(date, formatter);
-        DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HH:mm");
-        LocalTime localTime = LocalTime.parse(time, timeFormatter);
+        var dateTime = DateTimeUtils.convertStringToLocalDateTime(date, time);
         var tableData = tableDataService.getTableById(table);
-        LocalDateTime dateTime = LocalDateTime.of(localDate, localTime);
         if (dateTime.isBefore(LocalDateTime.now())) {
             throw new IncorrectDateTimeException("Дата и/или время уже прошла");
         }

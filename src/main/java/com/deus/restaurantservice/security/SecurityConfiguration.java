@@ -13,7 +13,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
-
+    private static final String ADMIN_ROLE = "ADMIN";
+    private static final String USER_ROLE = "USER";
+    private static final String MODER_ROLE = "MODER";
 
     public SecurityConfiguration(UserDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
@@ -27,27 +29,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        String adminRole = "ADMIN";
-        String userRole = "USER";
-        String moderRole = "MODER";
 
         http
-                .csrf().disable()
+                    .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/moder/**").hasRole(moderRole)
-                .antMatchers("/registration").permitAll()
-                .anyRequest().authenticated()
-                .and()
+                    .antMatchers("/moder/**").hasRole(MODER_ROLE)
+                    .antMatchers("/registration").permitAll()
+                    .anyRequest().authenticated()
+                    .and()
                 .formLogin()
-                .loginPage("/login").defaultSuccessUrl("/login/distribution", true).permitAll()
-                .and()
-                .logout().permitAll()
-                .and()
+                    .loginPage("/login").defaultSuccessUrl("/login/distribution", true).permitAll()
+                    .and()
+                    .logout().permitAll()
+                    .and()
                 .logout()
-                .logoutUrl("/logout")
-                .logoutSuccessUrl("/login")
-                .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID");
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login")
+                    .invalidateHttpSession(true)
+                    .deleteCookies("JSESSIONID");
     }
 
     @Bean

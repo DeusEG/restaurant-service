@@ -14,7 +14,7 @@ public class Restaurant {
     @Column(name = "address", nullable = false, unique = true)
     private String address;
     @OneToOne
-    @JoinColumn(name = "id_admin", referencedColumnName="id_user")
+    @JoinColumn(name = "id_admin", referencedColumnName = "id_user")
     private User admin;
 
     public Restaurant() {

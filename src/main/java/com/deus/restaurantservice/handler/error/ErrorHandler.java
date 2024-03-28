@@ -12,7 +12,8 @@ public class ErrorHandler {
 
     @ExceptionHandler({IncorrectDateTimeException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleItemNotAvailable(final RuntimeException e, Model model) {
+    public String handleIncorrectDateTime(final IncorrectDateTimeException e, Model model) {
+        model.addAttribute("exception", e);
         return "error";
     }
 }
