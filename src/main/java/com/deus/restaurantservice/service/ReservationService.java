@@ -2,21 +2,12 @@ package com.deus.restaurantservice.service;
 
 import com.deus.restaurantservice.exception.IncorrectDateTimeException;
 import com.deus.restaurantservice.model.Reservation;
-import com.deus.restaurantservice.model.Restaurant;
-import com.deus.restaurantservice.model.TableData;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.ReservationRepository;
-import com.deus.restaurantservice.repository.RestaurantRepository;
 import com.deus.restaurantservice.utils.DateTimeUtils;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 @Service

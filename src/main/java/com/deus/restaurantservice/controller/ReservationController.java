@@ -1,14 +1,10 @@
 package com.deus.restaurantservice.controller;
 
-import com.deus.restaurantservice.model.Restaurant;
-import com.deus.restaurantservice.model.TableData;
 import com.deus.restaurantservice.model.User;
-import com.deus.restaurantservice.repository.UserRepository;
 import com.deus.restaurantservice.service.ReservationService;
 import com.deus.restaurantservice.service.RestaurantService;
 import com.deus.restaurantservice.service.TableDataService;
 import com.deus.restaurantservice.service.UserService;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +13,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
 
 @Controller
 @RequestMapping("/reservation")

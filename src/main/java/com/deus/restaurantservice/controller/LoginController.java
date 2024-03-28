@@ -1,6 +1,5 @@
 package com.deus.restaurantservice.controller;
 
-import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.service.UserService;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

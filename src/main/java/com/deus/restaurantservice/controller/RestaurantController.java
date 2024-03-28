@@ -11,11 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.format.DateTimeFormatter;
 
 @Controller
 @RequestMapping("/restaurant")
@@ -31,7 +27,7 @@ public class RestaurantController {
     }
 
     @GetMapping("/show")
-    public String getAllRestaurantInfo(Model model){
+    public String getAllRestaurantInfo(Model model) {
         model.addAttribute("restaurants", restaurantService.getAllRestaurant());
         return "restaurant-info-list";
     }
@@ -45,9 +41,9 @@ public class RestaurantController {
 
     @PostMapping("/{restaurantId}")
     public String createNewComment(@PathVariable Long restaurantId, String comment,
-                                       HttpSession session) {
+                                   HttpSession session) {
         var user = (User) session.getAttribute("user");
-        var restaurant =  restaurantService.getRestaurantById(restaurantId);
+        var restaurant = restaurantService.getRestaurantById(restaurantId);
         commentService.createComment(user, restaurant, comment);
         return "redirect:/restaurant/{restaurantId}";
     }
