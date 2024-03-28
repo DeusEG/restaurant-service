@@ -12,12 +12,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
-    private final UserDetailsService userDetailsService;
+    private final CustomDetailsService userDetailsService;
     private static final String ADMIN_ROLE = "ADMIN";
     private static final String USER_ROLE = "USER";
     private static final String MODER_ROLE = "MODER";
 
-    public SecurityConfiguration(UserDetailsService userDetailsService) {
+    public SecurityConfiguration(CustomDetailsService userDetailsService) {
         this.userDetailsService = userDetailsService;
     }
 
@@ -33,8 +33,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                     .csrf().disable()
                 .authorizeRequests()
+                .antMatchers("/registration").permitAll()
                     .antMatchers("/moder/**").hasRole(MODER_ROLE)
-                    .antMatchers("/registration").permitAll()
                     .anyRequest().authenticated()
                     .and()
                 .formLogin()

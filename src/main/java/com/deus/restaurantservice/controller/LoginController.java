@@ -23,10 +23,9 @@ public class LoginController {
         return "/login";
     }
 
-
     @GetMapping("/distribution")
     public String distribution(HttpSession http) {
-        User user = userService.findByTelegram(SecurityContextHolder.getContext().getAuthentication().getName());
+        var user = userService.findByTelegram(SecurityContextHolder.getContext().getAuthentication().getName());
         http.setAttribute("user", user);
         if (user.getRole().getName().equals("MODER")) {
             return "redirect:/moder";

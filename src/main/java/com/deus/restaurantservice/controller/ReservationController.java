@@ -48,7 +48,7 @@ public class ReservationController {
 
     @GetMapping("/{restaurantId}")
     public String showFormNewReservation(@PathVariable Long restaurantId, Model model) {
-        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
+        var restaurant = restaurantService.getRestaurantById(restaurantId);
         model.addAttribute("tables", tableDataService.getAllTableByRestaurant(restaurant));
         return "new-reservation";
     }
@@ -56,7 +56,7 @@ public class ReservationController {
     @PostMapping("/{restaurantId}")
     public String createNewReservation(String date, String time, String comment, Long table,
                                        HttpSession session) {
-        User user = (User) session.getAttribute("user");
+        var user = (User) session.getAttribute("user");
         reservationService.createReservation(user, table, date, time, comment);
         return "redirect:/reservation/show";
     }

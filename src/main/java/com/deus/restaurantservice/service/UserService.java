@@ -1,5 +1,6 @@
 package com.deus.restaurantservice.service;
 
+import com.deus.restaurantservice.exception.IncorrectRegistrationData;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.RoleRepository;
 import com.deus.restaurantservice.repository.UserRepository;
@@ -38,7 +39,12 @@ public class UserService {
     }
 
     public User createUser(String name, String telegram, String password) {
-        User user =  new User(name, telegram, roleRepository.findByName("USER"),
+        if (telegram.contains("@")) {
+            throw new IncorrectRegistrationData("Укажите телеграм без символа '@'");
+        } else if (password.length() < 5) {
+            throw new IncorrectRegistrationData("Ваш пароль слишком короткий");
+        }
+        var user =  new User(name, telegram, roleRepository.findByName("USER"),
                 passwordEncoder.encode(password));
         userRepository.save(user);
         return user;

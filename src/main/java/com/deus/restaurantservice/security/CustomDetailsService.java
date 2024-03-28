@@ -20,7 +20,7 @@ public class CustomDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         User user = userRepository.findByTelegram(username);
         if (user == null) {
-            throw new UsernameNotFoundException("Не найдет пользователь с именем: " + username);
+            throw new UsernameNotFoundException("Не найден пользователь с именем: " + username);
         }
         return org.springframework.security.core.userdetails.User.builder()
                 .username(user.getTelegram())

@@ -46,7 +46,7 @@ public class RestaurantController {
     @PostMapping("/{restaurantId}")
     public String createNewComment(@PathVariable Long restaurantId, String comment,
                                        HttpSession session) {
-        User user = (User) session.getAttribute("user");
+        var user = (User) session.getAttribute("user");
         var restaurant =  restaurantService.getRestaurantById(restaurantId);
         commentService.createComment(user, restaurant, comment);
         return "redirect:/restaurant/{restaurantId}";
