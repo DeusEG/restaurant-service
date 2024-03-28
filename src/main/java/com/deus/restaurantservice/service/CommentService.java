@@ -12,7 +12,11 @@ import java.util.List;
 @Service
 public class CommentService {
 
+    private static final String COMMENT_ERROR_MESSAGE = "Длина комментария должна быть от %d до %d";
     private final CommentRepository commentRepository;
+    private static final Integer MIN_COMMENT_LENGTH = 5;
+    private static final Integer MAX_COMMENT_LENGTH = 300;
+
 
     public CommentService(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
@@ -24,7 +28,8 @@ public class CommentService {
 
     public Comment createComment(User user, Restaurant restaurant, String commentText) {
         if (commentText.length() < 5 || commentText.length() > 300) {
-            throw new IncorrectCommentLengthException("Длина комментария должна быть от 20 до 300 символов");
+            throw new IncorrectCommentLengthException(
+                    String.format(COMMENT_ERROR_MESSAGE, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH));
         }
         var comment = new Comment(user, restaurant, commentText);
         commentRepository.save(comment);

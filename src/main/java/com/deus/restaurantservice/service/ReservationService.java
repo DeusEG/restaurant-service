@@ -21,7 +21,7 @@ import java.util.List;
 
 @Service
 public class ReservationService {
-
+    private static final String RESERVATION_ERROR_MESSAGE = "Дата и/или время уже прошли";
     private final ReservationRepository reservationRepository;
     private final TableDataService tableDataService;
 
@@ -38,7 +38,7 @@ public class ReservationService {
         var dateTime = DateTimeUtils.convertStringToLocalDateTime(date, time);
         var tableData = tableDataService.getTableById(table);
         if (dateTime.isBefore(LocalDateTime.now())) {
-            throw new IncorrectDateTimeException("Дата и/или время уже прошла");
+            throw new IncorrectDateTimeException(RESERVATION_ERROR_MESSAGE);
         }
         Reservation reservation =  new Reservation(user, tableData, dateTime, comment);
         reservationRepository.save(reservation);

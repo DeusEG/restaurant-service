@@ -4,14 +4,16 @@ import com.deus.restaurantservice.model.Reservation;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.service.ReservationService;
 import com.deus.restaurantservice.service.UserService;
-import com.deus.restaurantservice.utils.DateTimeUtils;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
-import org.telegram.telegrambots.meta.api.objects.Message;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -39,37 +41,72 @@ public class TelegramBot extends TelegramLongPollingBot {
         return BOT_TOKEN;
     }
 
-
     @Override
     public void onUpdateReceived(Update update) {
-        var originalMessage = update.getMessage();
-        Long idChat = update.getMessage().getChatId();
-        String userTgName = originalMessage.getFrom().getUserName();
-        User user = checkUserExist(originalMessage);
-        List<Reservation> reservations = reservationService.getAllReservationByUser(user);
+        var chatId = update.getMessage().getChatId();
+        var userMessage = update.getMessage();
+        sendButtonMessage(chatId);
+        var userTgName = userMessage.getFrom().getUserName();
+        var user = getUser(userTgName);
         if (Objects.isNull(user)) {
-            sendMessage(idChat, "Пользователь " + userTgName + " не зарегистрирован");
+            sendMessage(chatId, "Пользователь " + userTgName + " не зарегистрирован");
         } else {
             if (update.getMessage().getText().equals("Мои бронирования")) {
-                for (Reservation reservation : reservations) {
-                    sendMessage(idChat, "Ресторан: " + reservation.getTable().getRestaurant().getAddress() +
-                            " Дата " + getDateFromDateTime(reservation.getDateTime()) +
-                            " Время " + getTimeFromDateTime(reservation.getDateTime()));
-                }
+                printUserReservations(user, chatId);
+            } else if (update.getMessage().getText().equals("Проверить регистрацию")) {
+                sendMessage(chatId, checkUserExist(userTgName));
             }
         }
     }
 
+    private User getUser(String userTgName) {
+        return userService.findByTelegram(userTgName);
+    }
 
-    private User checkUserExist(Message message) {
-        String userTgName = message.getFrom().getUserName();
-        var userList = userService.getAllUser();
-        for (User user : userList) {
-            if (user.getTelegram().equals(userTgName)) {
-                return user;
-            }
+    private void sendButtonMessage(Long chatId) {
+        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        replyKeyboardMarkup.setSelective(true);
+        replyKeyboardMarkup.setResizeKeyboard(true);
+        replyKeyboardMarkup.setOneTimeKeyboard(true);
+
+        List<KeyboardRow> keyboard = new ArrayList<>();
+
+        KeyboardRow keyboardFirstRow = new KeyboardRow();
+        KeyboardButton userExistButton = new KeyboardButton("Проверить регистрацию");
+        KeyboardButton userReservationButton = new KeyboardButton("Мои бронирования");
+
+        keyboardFirstRow.add(userExistButton);
+        keyboardFirstRow.add(userReservationButton);
+
+        keyboard.add(keyboardFirstRow);
+
+        replyKeyboardMarkup.setKeyboard(keyboard);
+
+        SendMessage message = new SendMessage();
+        message.setChatId(chatId);
+        message.setText("Выберите одну из кнопок:");
+        message.setReplyMarkup(replyKeyboardMarkup);
+
+        try {
+            execute(message);
+        } catch (TelegramApiException e) {
+            e.printStackTrace();
         }
-        return null;
+    }
+
+    private void printUserReservations(User user, Long chatId) {
+        var reservations = reservationService.getAllReservationByUser(user);
+        for (Reservation reservation : reservations) {
+            sendMessage(chatId, "Ресторан: " + reservation.getTable().getRestaurant().getAddress() +
+                    " Дата " + getDateFromDateTime(reservation.getDateTime()) +
+                    " Время " + getTimeFromDateTime(reservation.getDateTime()));
+        }
+    }
+
+    private String checkUserExist(String userTgName) {
+        var userList = userService.getAllUser();
+        var user = userService.findByTelegram(userTgName);
+        return userList.contains(user) ? "Вы зарегистрированы" : "Вы не зарегистрированы";
     }
 
     private void sendMessage(Long idChat, String message) {
