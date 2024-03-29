@@ -1,6 +1,6 @@
 package com.deus.restaurantservice.service;
 
-import com.deus.restaurantservice.exception.IncorrectDateTimeException;
+import com.deus.restaurantservice.exception.IncorrectReservationException;
 import com.deus.restaurantservice.model.Reservation;
 import com.deus.restaurantservice.model.TableData;
 import com.deus.restaurantservice.model.User;
@@ -10,12 +10,12 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Objects;
 
 @Service
 public class ReservationService {
-    private static final String DATE_TIME_RESERVATION_ERROR_MESSAGE = "Дата и/или время уже прошли";
+    private static final String DATE_TIME_RESERVATION_ERROR_MESSAGE = "Некорректные дата и/или время";
     private static final String RESERVATION_ALREADY_EXIST_ERROR_MESSAGE = "Это время занято, пожалуйста, выберите другое время";
+    private static final String NUMBER_OF_SEATS_ERROR_MESSAGE = "Выберите количество мест для бронирования";
     private final ReservationRepository reservationRepository;
     private final TableDataService tableDataService;
 
@@ -29,22 +29,25 @@ public class ReservationService {
     }
 
     public Reservation createReservation(User user, Long table, String date, String time,
-                                         String comment, String numberOfSeats) {
+                                         String comment, Integer numberOfSeats) {
+        if (numberOfSeats == null) {
+            throw new IncorrectReservationException(NUMBER_OF_SEATS_ERROR_MESSAGE);
+        }
         var dateTime = convertAndValidateDateTime(date, time);
         var tableData = checkAlreadyExistReservations(dateTime, table);
 
-        var reservation = new Reservation(user, tableData, dateTime, comment, Integer.parseInt(numberOfSeats));
+        var reservation = new Reservation(user, tableData, dateTime, comment, numberOfSeats);
         reservationRepository.save(reservation);
         return reservation;
     }
 
     private LocalDateTime convertAndValidateDateTime(String date, String time) {
-        if (Objects.isNull(date) || Objects.isNull(time)) {
-            throw new IncorrectDateTimeException(DATE_TIME_RESERVATION_ERROR_MESSAGE);
+        if (date.isEmpty() || time.isEmpty()) {
+            throw new IncorrectReservationException(DATE_TIME_RESERVATION_ERROR_MESSAGE);
         }
         var dateTime = DateTimeUtils.convertStringToLocalDateTime(date, time);
         if (dateTime.isBefore(LocalDateTime.now())) {
-            throw new IncorrectDateTimeException(DATE_TIME_RESERVATION_ERROR_MESSAGE);
+            throw new IncorrectReservationException(DATE_TIME_RESERVATION_ERROR_MESSAGE);
         }
         return dateTime;
     }
@@ -54,9 +57,11 @@ public class ReservationService {
         var allReservationByTable = reservationRepository.findAllByTable(tableData);
         for (Reservation reservation : allReservationByTable) {
             var existingDateTime = reservation.getDateTime();
-            var existingDateTimeOneHourLater = existingDateTime.plusHours(2);
-            if (dateTime.isBefore(existingDateTimeOneHourLater) && existingDateTime.isBefore(dateTime.plusHours(1))) {
-                throw new IncorrectDateTimeException(RESERVATION_ALREADY_EXIST_ERROR_MESSAGE);
+            var existingDateTimeOneHourBefore = existingDateTime.minusHours(1);
+            var existingDateTimeOneHourLater = existingDateTime.plusHours(1);
+
+            if (dateTime.isAfter(existingDateTimeOneHourBefore) && dateTime.isBefore(existingDateTimeOneHourLater)) {
+                throw new IncorrectReservationException(RESERVATION_ALREADY_EXIST_ERROR_MESSAGE);
             }
         }
         return tableData;

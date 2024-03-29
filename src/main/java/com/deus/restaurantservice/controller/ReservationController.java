@@ -48,7 +48,7 @@ public class ReservationController {
     }
 
     @PostMapping("/{restaurantId}")
-    public String createNewReservation(String date, String time, String comment, Long table, String numberOfSeats,
+    public String createNewReservation(String date, String time, String comment, Long table, Integer numberOfSeats,
                                        HttpSession session) {
         var user = (User) session.getAttribute("user");
         reservationService.createReservation(user, table, date, time, comment, numberOfSeats);

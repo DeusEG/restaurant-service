@@ -17,13 +17,13 @@ public class Reservation {
     @Column(name = "id_reservation")
     private Long id;
 
-    @Column(name = "date_time")
+    @Column(name = "date_time", nullable = false)
     private LocalDateTime dateTime;
 
     @Column(name = "comment")
     private String comment;
 
-    @Column(name = "number_of_seats")
+    @Column(name = "number_of_seats", nullable = false)
     private Integer numberOfSeats;
 
     @ManyToOne()
@@ -37,7 +37,7 @@ public class Reservation {
     public Reservation() {
     }
 
-    public Reservation(User user, TableData table, LocalDateTime dateTime, String comment,   Integer numberOfSeats) {
+    public Reservation(User user, TableData table, LocalDateTime dateTime, String comment, Integer numberOfSeats) {
         this.dateTime = dateTime;
         this.comment = comment;
         this.numberOfSeats = numberOfSeats;

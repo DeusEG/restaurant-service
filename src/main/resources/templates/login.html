@@ -11,8 +11,13 @@
     <input type="password" placeholder="Введите пароль" id="password" name="password">
     <button type="submit">Войти</button>
 </form>
-<form method="get" action="/registration">
-    <button type="submit">Создать аккаунт</button>
-</form>
+<div th:if="${param.error}" class="error-message">
+    Неправильное имя пользователя или пароль.
+</div>
+<div>
+    <form method="get" action="/registration">
+        <button type="submit">Создать аккаунт</button>
+    </form>
+</div>
 </body>
 </html>
