@@ -1,5 +1,6 @@
-package com.deus.restaurantservice.handler.error;
+package com.deus.restaurantservice.handler;
 
+import com.deus.restaurantservice.exception.DeleteModerException;
 import com.deus.restaurantservice.exception.IncorrectCommentLengthException;
 import com.deus.restaurantservice.exception.IncorrectDateTimeException;
 import com.deus.restaurantservice.exception.IncorrectRegistrationData;
@@ -37,6 +38,13 @@ public class ErrorHandler {
     @ExceptionHandler({IncorrectCommentLengthException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public String handleIncorrectCommentLength(final IncorrectCommentLengthException e, Model model) {
+        model.addAttribute("exception", e);
+        return "error";
+    }
+
+    @ExceptionHandler({DeleteModerException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public String handleIncorrectDateTime(final DeleteModerException e, Model model) {
         model.addAttribute("exception", e);
         return "error";
     }

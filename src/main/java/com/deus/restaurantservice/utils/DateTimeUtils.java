@@ -6,6 +6,9 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
 public class DateTimeUtils {
+    private DateTimeUtils() {
+        throw new AssertionError("This class should not be instantiated.");
+    }
 
     public static String getDateFromDateTime(LocalDateTime dateTime) {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy");
