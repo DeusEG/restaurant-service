@@ -24,7 +24,9 @@ public class ReservationController {
     private final UserService userService;
 
 
-    public ReservationController(ReservationService reservationService, RestaurantService restaurantService, TableDataService tableDataService, UserService userService) {
+    public ReservationController(ReservationService reservationService,
+                                 RestaurantService restaurantService, TableDataService tableDataService,
+                                 UserService userService) {
         this.reservationService = reservationService;
         this.restaurantService = restaurantService;
         this.tableDataService = tableDataService;
@@ -46,10 +48,10 @@ public class ReservationController {
     }
 
     @PostMapping("/{restaurantId}")
-    public String createNewReservation(String date, String time, String comment, Long table,
+    public String createNewReservation(String date, String time, String comment, Long table, String numberOfSeats,
                                        HttpSession session) {
         var user = (User) session.getAttribute("user");
-        reservationService.createReservation(user, table, date, time, comment);
+        reservationService.createReservation(user, table, date, time, comment, numberOfSeats);
         return "redirect:/reservation/show";
     }
 }

@@ -22,7 +22,6 @@ public class UserService {
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     public UserService(UserRepository userRepository, RoleRepository roleRepository1, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository1;
@@ -37,7 +36,6 @@ public class UserService {
         return userRepository.findByTelegram(telegram);
     }
 
-
     @Transactional
     public String deleteByTelegram(String telegram) {
         return userRepository.removeByTelegram(telegram);
@@ -46,7 +44,7 @@ public class UserService {
     public User createUser(String name, String telegram, String password) {
         if (telegram.contains(ADDRESS_SYMBOL)) {
             throw new IncorrectRegistrationData(INCORRECT_TELEGRAM_ERROR_MESSAGE);
-        } else if (password.length() < PASSWORD_MIN_LENGTH) {
+        } else if (password == null || password.length() < PASSWORD_MIN_LENGTH) {
             throw new IncorrectRegistrationData(SHORT_PASSWORD_ERROR_MESSAGE);
         }
         var user =  new User(name, telegram, roleRepository.findByName(USER_ROLE),

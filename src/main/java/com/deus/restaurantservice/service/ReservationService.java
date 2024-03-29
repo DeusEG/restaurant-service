@@ -25,13 +25,14 @@ public class ReservationService {
         return reservationRepository.findAllByUser(user);
     }
 
-    public Reservation createReservation(User user, Long table, String date, String time, String comment) {
+    public Reservation createReservation(User user, Long table, String date, String time,
+                                         String comment, String numberOfSeats) {
         var dateTime = DateTimeUtils.convertStringToLocalDateTime(date, time);
         var tableData = tableDataService.getTableById(table);
         if (dateTime.isBefore(LocalDateTime.now())) {
             throw new IncorrectDateTimeException(RESERVATION_ERROR_MESSAGE);
         }
-        Reservation reservation =  new Reservation(user, tableData, dateTime, comment);
+        Reservation reservation =  new Reservation(user, tableData, dateTime, comment, Integer.parseInt(numberOfSeats));
         reservationRepository.save(reservation);
         return reservation;
     }
