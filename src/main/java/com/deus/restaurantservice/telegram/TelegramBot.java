@@ -21,6 +21,9 @@ import java.util.Objects;
 
 import static com.deus.restaurantservice.utils.DateTimeUtils.*;
 
+/**
+ * Класс для работы с телеграм ботом
+ */
 @Component
 public class TelegramBot extends TelegramLongPollingBot {
     private final String BOT_NAME = "restaurant_deus_bot";
@@ -33,16 +36,32 @@ public class TelegramBot extends TelegramLongPollingBot {
         this.reservationService = reservationService;
     }
 
+    /**
+     * Метод для получения имени бота
+     *
+     * @return имя бота
+     */
     @Override
     public String getBotUsername() {
         return BOT_NAME;
     }
 
+    /**
+     * Метод для получения токена бота
+     *
+     * @return токен бота
+     */
     @Override
     public String getBotToken() {
         return BOT_TOKEN;
     }
 
+    /**
+     * Метод для получения и обработки сообщений от пользователя
+     *
+     * @param update Данные поулчаемые от пользователя
+     *
+     */
     @Override
     public void onUpdateReceived(Update update) {
         var chatId = update.getMessage().getChatId();
@@ -65,8 +84,15 @@ public class TelegramBot extends TelegramLongPollingBot {
         return userService.findByTelegram(userTgName);
     }
 
+
+    /**
+     * Метод для создания и отображения кнопок в телеграм боте
+     *
+     * @param chatId  Идентификатор чата с пользователем
+     *
+     */
     private void sendButtonMessage(Long chatId) {
-        ReplyKeyboardMarkup replyKeyboardMarkup = new ReplyKeyboardMarkup();
+        var replyKeyboardMarkup = new ReplyKeyboardMarkup();
         replyKeyboardMarkup.setSelective(true);
         replyKeyboardMarkup.setResizeKeyboard(true);
         replyKeyboardMarkup.setOneTimeKeyboard(true);
@@ -96,6 +122,13 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Метод для отображения пользователю данных о его бронированиях
+     *
+     * @param chatId  Идентификатор чата с пользователем
+     * @param user    Пользователь
+     *
+     */
     private void printUserReservations(User user, Long chatId) {
         var reservations = reservationService.getAllReservationByUser(user);
         for (Reservation reservation : reservations) {
@@ -105,12 +138,25 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
+    /**
+     * Метод для оповещения пользваотеля о его регистрации в системе
+     *
+     * @param userTgName  Телеграм пользователя
+     * @return            Сообещние о состоянии регистрации в системе
+     */
     private String checkUserExist(String userTgName) {
         var userList = userService.getAllUser();
         var user = userService.findByTelegram(userTgName);
         return userList.contains(user) ? "Вы зарегистрированы" : "Вы не зарегистрированы";
     }
 
+    /**
+     * Метод для отправки сообщений пользователю в чат
+     *
+     * @param idChat   Идентификатор чата
+     * @param message  Содержание сообщения
+     *
+     */
     private void sendMessage(Long idChat, String message) {
         SendMessage sendMessage = new SendMessage();
         sendMessage.setChatId(idChat);
@@ -121,6 +167,4 @@ public class TelegramBot extends TelegramLongPollingBot {
             System.out.println(e.getMessage());
         }
     }
-
-
 }
