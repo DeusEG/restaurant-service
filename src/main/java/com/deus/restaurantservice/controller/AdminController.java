@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Контроллер для пользоваталей с ролью ADMIN. Отвечает за получение и удаление комментариев пользователей
+ */
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
@@ -29,6 +32,13 @@ public class AdminController {
         this.commentService = commentService;
     }
 
+    /**
+     * Метод для отображения комментариев ресторана
+     *
+     * @param model   Модель для передачи данных на страницу
+     * @param session Позволяет хранить и извлекать атрибуты, связанные с сеансом или пользователем, пока длится сессия
+     * @return        Страница для отображения и редактирования комментариев ресторана
+     */
     @GetMapping()
     public String showCommentsByRestaurantForAdminRole(Model model, HttpSession session) {
         var user = (User) session.getAttribute("user");
@@ -40,6 +50,12 @@ public class AdminController {
         return "admin-restaurant-comments";
     }
 
+    /**
+     * Метод для удаление комментария по его идентификатору
+     *
+     * @param commentId Идентификатор комментария
+     * @return          Перенаправляет на страницу отображения и редактирования комментариев ресторана
+     */
     @DeleteMapping("/{commentId}")
     public String deleteUser(@PathVariable String commentId) {
         commentService.deleteCommentById(commentId);

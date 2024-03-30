@@ -17,7 +17,7 @@ import java.util.List;
 public class ReservationServiceImpl implements ReservationService {
     private static final String DATE_TIME_RESERVATION_ERROR_MESSAGE = "Некорректные дата и/или время";
     private static final String RESERVATION_ALREADY_EXIST_ERROR_MESSAGE = "Это время занято, пожалуйста, выберите другое время";
-    private static final String NUMBER_OF_SEATS_ERROR_MESSAGE = "Выберите количество мест для бронирования";
+    private static final String NUMBER_OF_SEATS_ERROR_MESSAGE = "Вы не выбрали количество мест или оно меньше, чем вам нужно";
     private final ReservationRepository reservationRepository;
     private final TableDataServiceImpl tableDataServiceImpl;
 
@@ -34,11 +34,11 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Reservation createReservation(User user, Long table, String date, String time,
                                          String comment, Integer numberOfSeats) {
-        if (numberOfSeats == null) {
-            throw new IncorrectReservationException(NUMBER_OF_SEATS_ERROR_MESSAGE);
-        }
         var dateTime = convertAndValidateDateTime(date, time);
         var tableData = checkAlreadyExistReservations(dateTime, table);
+        if (numberOfSeats == null || tableData.getNumberOfSeats() < numberOfSeats) {
+            throw new IncorrectReservationException(NUMBER_OF_SEATS_ERROR_MESSAGE);
+        }
 
         var reservation = new Reservation(user, tableData, dateTime, comment, numberOfSeats);
         reservationRepository.save(reservation);

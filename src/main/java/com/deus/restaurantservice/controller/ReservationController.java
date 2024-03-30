@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Контроллер для бронирования. Отвечает за создание и получение бронирований
+ */
 @Controller
 @RequestMapping("/reservation")
 public class ReservationController {
@@ -31,6 +34,13 @@ public class ReservationController {
         this.userService = userService;
     }
 
+    /**
+     * Метод для отображения бронирований пользователя
+     *
+     * @param session Позволяет хранить и извлекать атрибуты, связанные с сеансом или пользователем, пока длится сессия
+     * @param model   Модель для передачи данных на страницу
+     * @return        Страница для отображения бронирований пользователя
+     */
     @GetMapping("/show")
     public String getAllReservation(HttpSession session, Model model) {
         var reservations = reservationService.getAllReservationByUser((User) session.getAttribute("user"));
@@ -38,6 +48,13 @@ public class ReservationController {
         return "show-user-reservation";
     }
 
+    /**
+     * Метод для отображения формы создания нового бронирования
+     *
+     * @param restaurantId Идентификатор ресторана
+     * @param model        Модель для передачи данных на страницу
+     * @return             Страница для отображения формы создания нового бронирования
+     */
     @GetMapping("/{restaurantId}")
     public String showFormNewReservation(@PathVariable Long restaurantId, Model model) {
         var restaurant = restaurantService.getRestaurantById(restaurantId);
@@ -45,6 +62,17 @@ public class ReservationController {
         return "new-reservation";
     }
 
+    /**
+     * Метод для создания нового бронирования
+     *
+     * @param date          Дата бронирования
+     * @param time          Время бронирования
+     * @param comment       Комментарий бронирования
+     * @param table         Стол бронирования
+     * @param numberOfSeats Количество мест для бронирования
+     * @param session       Позволяет хранить и извлекать атрибуты, связанные с сеансом или пользователем, пока длится сессия
+     * @return              Перенаправления на страницу с бронированиями пользователя
+     */
     @PostMapping("/{restaurantId}")
     public String createNewReservation(String date, String time, String comment, Long table, Integer numberOfSeats,
                                        HttpSession session) {

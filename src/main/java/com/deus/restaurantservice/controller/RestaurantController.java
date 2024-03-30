@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpSession;
 
+/**
+ * Контроллер ресторанов. Отвечает за получение ресторанов и комментариев к ним.
+ */
 @Controller
 @RequestMapping("/restaurant")
 public class RestaurantController {
@@ -26,12 +29,25 @@ public class RestaurantController {
         this.commentService = commentService;
     }
 
+    /**
+     * Метод получения всех ресторанов
+     *
+     * @param model   Модель для передачи данных на страницу
+     * @return        Страница для отображения всех ресторанов
+     */
     @GetMapping("/show")
     public String getAllRestaurantInfo(Model model) {
         model.addAttribute("restaurants", restaurantService.getAllRestaurant());
         return "restaurant-info-list";
     }
 
+    /**
+     * Метод получения комментариев ресторана
+     *
+     * @param restaurantId   Идентификатор ресторана
+     * @param model          Модель для передачи данных на страницу
+     * @return               Страница для отображения всех комментариев
+     */
     @GetMapping("/{restaurantId}")
     public String showCommentsByRestaurant(@PathVariable Long restaurantId, Model model) {
         var restaurant = restaurantService.getRestaurantById(restaurantId);
@@ -39,6 +55,14 @@ public class RestaurantController {
         return "comments";
     }
 
+    /**
+     * Метод для создания комментария к ресторану
+     *
+     * @param restaurantId   Идентификатор ресторана
+     * @param comment        Комментарий
+     * @param session        Позволяет хранить и извлекать атрибуты, связанные с сеансом или пользователем, пока длится сессия
+     * @return               Перенаправление на страницу получение комментариев ресторана
+     */
     @PostMapping("/{restaurantId}")
     public String createNewComment(@PathVariable Long restaurantId, String comment,
                                    HttpSession session) {
