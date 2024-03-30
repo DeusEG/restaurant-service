@@ -32,6 +32,9 @@ public class AdminController {
     @GetMapping()
     public String showCommentsByRestaurantForAdminRole(Model model, HttpSession session) {
         var user = (User) session.getAttribute("user");
+        if (!user.getRole().getName().equals("ADMIN")) {
+            model.addAttribute("errorMessage", "Отказно в доступе");
+        }
         var restaurant = restaurantService.getRestaurantByAdmin(user.getUserId());
         model.addAttribute("comments", commentService.getAllCommentsByRestaurant(restaurant));
         return "admin-restaurant-comments";

@@ -1,31 +1,36 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Панель модератора</title>
 </head>
 <body>
-<form method="get" action="/logout">
-    <button type="submit">Выйти</button>
-</form>
-<table>
-    <tr>
-        <th>Имя</th>
-        <th>Телеграм</th>
-        <th>Роль</th>
-    </tr>
-    <tr th:each="user: ${users}">
-        <td th:text="${{user.getName()}}"/>
-        <td th:text="${{user.getTelegram()}}"/>
-        <td th:text="${{user.getRole().getName()}}"/>
-        <td>
-            <div>
-                <form th:method="DELETE" th:action="@{|/moder/${user.getTelegram()}|}">
-                    <button type="submit">Удалить</button>
-                </form>
-            </div>
-        </td>
-    </tr>
-</table>
+<div th:if="${errorMessage != null}">
+    <p class="alert alert-danger" th:text="${errorMessage}"></p>
+</div>
+<div th:if="${errorMessage==null}">
+    <form method="get" action="/logout">
+        <button type="submit">Выйти</button>
+    </form>
+    <table>
+        <tr>
+            <th>Имя</th>
+            <th>Телеграм</th>
+            <th>Роль</th>
+        </tr>
+        <tr th:each="user: ${users}">
+            <td th:text="${{user.getName()}}"/>
+            <td th:text="${{user.getTelegram()}}"/>
+            <td th:text="${{user.getRole().getName()}}"/>
+            <td>
+                <div>
+                    <form th:method="DELETE" th:action="@{|/moder/${user.getTelegram()}|}">
+                        <button type="submit">Удалить</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+    </table>
+</div>
 </body>
 </html>

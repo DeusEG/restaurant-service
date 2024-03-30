@@ -2,10 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>панель администратора</title>
 </head>
 <body>
-<div>
+<div th:if="${errorMessage != null}">
+    <p class="alert alert-danger" th:text="${errorMessage}"></p>
+</div>
+<div th:if="${errorMessage==null}">
     <h2>Комментарии пользователей</h2>
     <table>
         <thead>
