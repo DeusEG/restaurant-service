@@ -31,6 +31,7 @@ public class User {
         this.role = role;
         this.password = password;
     }
+
     public User(String name, String telegram, Role role, String password) {
         this.name = name;
         this.telegram = telegram;

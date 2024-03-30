@@ -57,10 +57,10 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
     @Override
     @Transactional
     public User updateUser(User user, String userName, String password) {
-        if (!userName.isEmpty()) {
+        if (userName.isEmpty()) {
             throw new IncorrectRegistrationData(USERNAME_ERROR_MESSAGE);
         }
-        if (!password.isEmpty()) {
+        if (password.isEmpty()) {
             throw new IncorrectRegistrationData(SHORT_PASSWORD_ERROR_MESSAGE);
         }
         user.setPassword(passwordEncoder.encode(password));

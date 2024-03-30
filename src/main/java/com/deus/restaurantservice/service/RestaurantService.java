@@ -7,4 +7,5 @@ import java.util.List;
 public interface RestaurantService {
     List<Restaurant> getAllRestaurant();
     Restaurant getRestaurantById(Long id);
+    Restaurant getRestaurantByAdmin(Long id);
 }

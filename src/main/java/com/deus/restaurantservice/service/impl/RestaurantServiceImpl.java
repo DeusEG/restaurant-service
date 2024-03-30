@@ -25,4 +25,9 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Restaurant getRestaurantById(Long id) {
         return restaurantRepository.getRestaurantById(id);
     }
+
+    @Override
+    public Restaurant getRestaurantByAdmin(Long id) {
+        return restaurantRepository.findRestaurantByAdmin_UserId(id);
+    }
 }

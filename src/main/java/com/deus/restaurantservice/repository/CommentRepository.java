@@ -11,4 +11,5 @@ import java.util.List;
 @Repository
 public interface CommentRepository extends JpaRepository<Comment, Long> {
     List<Comment> findAllByRestaurant(Restaurant restaurant);
+    Long removeById(Long id);
 }

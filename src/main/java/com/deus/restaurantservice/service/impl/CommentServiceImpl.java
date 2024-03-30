@@ -1,11 +1,13 @@
 package com.deus.restaurantservice.service.impl;
 
+import com.deus.restaurantservice.exception.DeleteModerException;
 import com.deus.restaurantservice.exception.IncorrectCommentLengthException;
 import com.deus.restaurantservice.model.*;
 import com.deus.restaurantservice.repository.CommentRepository;
 import com.deus.restaurantservice.service.CommentService;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -34,5 +36,11 @@ public class CommentServiceImpl implements CommentService {
         var comment = new Comment(user, restaurant, commentText);
         commentRepository.save(comment);
         return comment;
+    }
+
+    @Override
+    @Transactional
+    public Long deleteCommentById(String id) {
+        return commentRepository.removeById(Long.parseLong(id));
     }
 }

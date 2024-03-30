@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h2>Комментарии пользователей</h2>
+    <table>
+        <thead>
+        <tr>
+            <th>Имя пользователя</th>
+            <th>Комментарий</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="comment : ${comments}">
+            <td th:text="${comment.getUser().getName()}"></td>
+            <td th:text="${comment.getComment()}"></td>
+            <td>
+                <div>
+                    <form th:method="DELETE" th:action="@{|/admin/${comment.getId()}|}">
+                        <button type="submit">Удалить</button>
+                    </form>
+                </div>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

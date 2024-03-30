@@ -28,6 +28,8 @@ public class LoginController {
         http.setAttribute("user", user);
         if (user.getRole().getName().equals("MODER")) {
             return "redirect:/moder";
+        } else if (user.getRole().getName().equals("ADMIN")) {
+            return "redirect:/admin";
         }
         return "redirect:/restaurant/show";
     }

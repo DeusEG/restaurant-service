@@ -34,7 +34,7 @@ public class RestaurantController {
 
     @GetMapping("/{restaurantId}")
     public String showCommentsByRestaurant(@PathVariable Long restaurantId, Model model) {
-        Restaurant restaurant = restaurantService.getRestaurantById(restaurantId);
+        var restaurant = restaurantService.getRestaurantById(restaurantId);
         model.addAttribute("comments", commentService.getAllCommentsByRestaurant(restaurant));
         return "comments";
     }

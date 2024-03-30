@@ -10,4 +10,5 @@ import java.util.List;
 public interface CommentService {
     List<Comment> getAllCommentsByRestaurant(Restaurant restaurant);
     Comment createComment(User user, Restaurant restaurant, String commentText);
+    Long deleteCommentById(String id);
 }
