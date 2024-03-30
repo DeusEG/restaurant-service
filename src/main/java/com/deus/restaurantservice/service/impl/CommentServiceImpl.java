@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Сервис для работы с комментариями ресторана
+ */
 @Service
 public class CommentServiceImpl implements CommentService {
 
@@ -18,15 +21,28 @@ public class CommentServiceImpl implements CommentService {
     private static final Integer MIN_COMMENT_LENGTH = 5;
     private static final Integer MAX_COMMENT_LENGTH = 300;
 
-
     public CommentServiceImpl(CommentRepository commentRepository) {
         this.commentRepository = commentRepository;
     }
 
+    /**
+     * Метод для получения всех комментариев ресторана
+     *
+     * @return Список комментариев ресторана
+     */
     @Override
     public List<Comment> getAllCommentsByRestaurant(Restaurant restaurant) {
         return commentRepository.findAllByRestaurant(restaurant);
     }
+
+    /**
+     * Метод для создания комментария к ресторану
+     *
+     * @param user         Пользователь, оставляющий комментарий
+     * @param restaurant   Ресторан, которому оставляют комментирий
+     * @param commentText  Содержание комментария
+     * @return             Возвращает объект Comment, иначе выбрасывает исключение
+     */
     @Override
     public Comment createComment(User user, Restaurant restaurant, String commentText) {
         if (commentText.length() < 5 || commentText.length() > 300) {
@@ -38,6 +54,12 @@ public class CommentServiceImpl implements CommentService {
         return comment;
     }
 
+    /**
+     * Метод для удаления комментария к ресторану
+     *
+     * @param id    Идентификатор комментария
+     * @return      Идентификатор удалённого комменатрия
+     */
     @Override
     @Transactional
     public Long deleteCommentById(String id) {

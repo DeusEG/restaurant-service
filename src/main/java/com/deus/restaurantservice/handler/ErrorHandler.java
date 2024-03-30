@@ -3,7 +3,7 @@ package com.deus.restaurantservice.handler;
 import com.deus.restaurantservice.exception.DeleteModerException;
 import com.deus.restaurantservice.exception.IncorrectCommentLengthException;
 import com.deus.restaurantservice.exception.IncorrectReservationException;
-import com.deus.restaurantservice.exception.IncorrectRegistrationData;
+import com.deus.restaurantservice.exception.IncorrectRegistrationDataException;
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,9 +20,9 @@ public class ErrorHandler {
         return "error";
     }
 
-    @ExceptionHandler({IncorrectRegistrationData.class})
+    @ExceptionHandler({IncorrectRegistrationDataException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public String handleIncorrectRegistration(final IncorrectRegistrationData e, Model model) {
+    public String handleIncorrectRegistration(final IncorrectRegistrationDataException e, Model model) {
         model.addAttribute("exception", e);
         return "error";
     }

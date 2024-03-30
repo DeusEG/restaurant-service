@@ -1,18 +1,21 @@
 package com.deus.restaurantservice.service.impl;
 
+import com.deus.restaurantservice.exception.IncorrectRegistrationDataException;
 import com.deus.restaurantservice.exception.IncorrectReservationException;
 import com.deus.restaurantservice.model.Reservation;
 import com.deus.restaurantservice.model.TableData;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.ReservationRepository;
 import com.deus.restaurantservice.service.ReservationService;
-import com.deus.restaurantservice.service.RestaurantService;
 import com.deus.restaurantservice.utils.DateTimeUtils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Сервис для работы с бронированиями
+ */
 @Service
 public class ReservationServiceImpl implements ReservationService {
     private static final String DATE_TIME_RESERVATION_ERROR_MESSAGE = "Некорректные дата и/или время";
@@ -26,11 +29,28 @@ public class ReservationServiceImpl implements ReservationService {
         this.tableDataServiceImpl = tableDataServiceImpl;
     }
 
+    /**
+     * Метод для получения всех бронирований пользователя
+     *
+     * @return Список бронирований пользователя
+     */
     @Override
     public List<Reservation> getAllReservationByUser(User user) {
         return reservationRepository.findAllByUser(user);
     }
 
+    /**
+     * Метод для создания бронирования
+     *
+     * @param user          Пользователь, осуществляющий бронирование
+     * @param table         Идентификатор стола, который броинрует пользователь
+     * @param date          Дата бронирования
+     * @param time          Время бронирвоания
+     * @param comment       Комментарий к бронированию
+     * @param numberOfSeats Количетсво гостей для бронирования
+     * @return              Бронирование
+     * @throws IncorrectRegistrationDataException если количество мест равно нулю или меньше, чем есть у стола
+     */
     @Override
     public Reservation createReservation(User user, Long table, String date, String time,
                                          String comment, Integer numberOfSeats) {
@@ -45,6 +65,14 @@ public class ReservationServiceImpl implements ReservationService {
         return reservation;
     }
 
+    /**
+     * Метод для конвертации и валидации даты и времени
+     *
+     * @param date          Дата бронирования типа String
+     * @param time          Время бронирвоания типа String
+     * @return              Возвращает дату и время типа LocalDateTime
+     * @throws IncorrectRegistrationDataException если время не указано или оно уже прошло
+     */
     private LocalDateTime convertAndValidateDateTime(String date, String time) {
         if (date.isEmpty() || time.isEmpty()) {
             throw new IncorrectReservationException(DATE_TIME_RESERVATION_ERROR_MESSAGE);
@@ -56,6 +84,14 @@ public class ReservationServiceImpl implements ReservationService {
         return dateTime;
     }
 
+    /**
+     * Метод для проверки существующих броинрований
+     *
+     * @param dateTime   Дата и время
+     * @param table      Стол для бронирвоания
+     * @return           Возвращает объект типа TableData
+     * @throws IncorrectRegistrationDataException если уже существует бронирование, за один час и после
+     */
     private TableData checkAlreadyExistReservations(LocalDateTime dateTime, Long table) {
         var tableData = tableDataServiceImpl.getTableById(table);
         var allReservationByTable = reservationRepository.findAllByTable(tableData);
@@ -70,5 +106,4 @@ public class ReservationServiceImpl implements ReservationService {
         }
         return tableData;
     }
-
 }

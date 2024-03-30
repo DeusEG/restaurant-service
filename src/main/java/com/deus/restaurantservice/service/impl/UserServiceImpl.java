@@ -1,7 +1,7 @@
 package com.deus.restaurantservice.service.impl;
 
 import com.deus.restaurantservice.exception.DeleteModerException;
-import com.deus.restaurantservice.exception.IncorrectRegistrationData;
+import com.deus.restaurantservice.exception.IncorrectRegistrationDataException;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.RoleRepository;
 import com.deus.restaurantservice.repository.UserRepository;
@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
+/**
+ * Сервис для работы с пользователями
+ */
 @Service
 public class UserServiceImpl implements com.deus.restaurantservice.service.UserService {
 
@@ -34,16 +37,34 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
         this.passwordEncoder = passwordEncoder;
     }
 
+    /**
+     * Метод для получения всех пользователей
+     *
+     * @return Список всех пользователей
+     */
     @Override
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
 
+    /**
+     * Метод для поиска пользователя по его телеграму
+     *
+     * @param telegram    Телеграм пользователя
+     * @return            Пользователь
+     */
     @Override
     public User findByTelegram(String telegram) {
         return userRepository.findByTelegram(telegram);
     }
 
+    /**
+     * Метод для удаления пользователя по его телеграму
+     *
+     * @param telegram Телеграм пользователя
+     * @return         Телеграм пользователя
+     * @throws DeleteModerException если пытаются удалить пользователя с ролью MODER
+     */
     @Override
     @Transactional
     public String deleteByTelegram(String telegram) {
@@ -54,14 +75,23 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
         return userRepository.removeByTelegram(telegram);
     }
 
+    /**
+     * Метод для изменения имени и пароля пользователя
+     *
+     * @param user     Пользователь
+     * @param userName Имя пользователя
+     * @param password Пароль пользователя
+     * @return         Объект типа User
+     * @throws IncorrectRegistrationDataException если некорректно указаны данные при изменение
+     */
     @Override
     @Transactional
     public User updateUser(User user, String userName, String password) {
         if (userName.isEmpty()) {
-            throw new IncorrectRegistrationData(USERNAME_ERROR_MESSAGE);
+            throw new IncorrectRegistrationDataException(USERNAME_ERROR_MESSAGE);
         }
         if (password.isEmpty()) {
-            throw new IncorrectRegistrationData(SHORT_PASSWORD_ERROR_MESSAGE);
+            throw new IncorrectRegistrationDataException(SHORT_PASSWORD_ERROR_MESSAGE);
         }
         user.setPassword(passwordEncoder.encode(password));
         user.setName(userName);
@@ -69,14 +99,23 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
         return user;
     }
 
+    /**
+     * Метод для создания пользователя
+     *
+     * @param name      Имя пользователя
+     * @param telegram  Телеграм пользователя
+     * @param password  Пароль пользователя
+     * @return          Объект типа User
+     * @throws IncorrectRegistrationDataException если некорректно указаны данные при регистрации
+     */
     @Override
     public User createUser(String name, String telegram, String password) {
         if (telegram == null) {
-            throw new IncorrectRegistrationData(EMPTY_TELEGRAM_ERROR_MESSAGE);
+            throw new IncorrectRegistrationDataException(EMPTY_TELEGRAM_ERROR_MESSAGE);
         } else if (telegram.contains(ADDRESS_SYMBOL)) {
-            throw new IncorrectRegistrationData(INCORRECT_TELEGRAM_ERROR_MESSAGE);
+            throw new IncorrectRegistrationDataException(INCORRECT_TELEGRAM_ERROR_MESSAGE);
         } else if (password == null || password.length() < PASSWORD_MIN_LENGTH) {
-            throw new IncorrectRegistrationData(SHORT_PASSWORD_ERROR_MESSAGE);
+            throw new IncorrectRegistrationDataException(SHORT_PASSWORD_ERROR_MESSAGE);
         }
         var user = new User(name, telegram, roleRepository.findByName(USER_ROLE),
                 passwordEncoder.encode(password));
