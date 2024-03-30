@@ -4,6 +4,8 @@ import com.deus.restaurantservice.model.Reservation;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.service.ReservationService;
 import com.deus.restaurantservice.service.UserService;
+import com.deus.restaurantservice.service.impl.ReservationServiceImpl;
+import com.deus.restaurantservice.service.impl.UserServiceImpl;
 import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;

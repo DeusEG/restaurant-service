@@ -47,6 +47,4 @@ public class RestaurantController {
         commentService.createComment(user, restaurant, comment);
         return "redirect:/restaurant/{restaurantId}";
     }
-
-
 }

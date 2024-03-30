@@ -24,9 +24,7 @@ public class ReservationController {
     private final UserService userService;
 
 
-    public ReservationController(ReservationService reservationService,
-                                 RestaurantService restaurantService, TableDataService tableDataService,
-                                 UserService userService) {
+    public ReservationController(ReservationService reservationService, RestaurantService restaurantService, TableDataService tableDataService, UserService userService) {
         this.reservationService = reservationService;
         this.restaurantService = restaurantService;
         this.tableDataService = tableDataService;

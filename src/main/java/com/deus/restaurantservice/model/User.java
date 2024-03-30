@@ -9,7 +9,8 @@ import java.util.Objects;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_user;
+    @Column(name = "id_user")
+    private Long userId;
     @Column(name = "name")
     private String name;
     @Column(name = "telegram", unique = true)
@@ -23,13 +24,13 @@ public class User {
     public User() {
     }
 
-    public User(Long id_user, String name, String telegram, Role role, String password) {
+    public User(Long userId, String name, String telegram, Role role, String password) {
+        this.userId = userId;
         this.name = name;
         this.telegram = telegram;
         this.role = role;
         this.password = password;
     }
-
     public User(String name, String telegram, Role role, String password) {
         this.name = name;
         this.telegram = telegram;
@@ -37,12 +38,12 @@ public class User {
         this.password = password;
     }
 
-    public Long getId_user() {
-        return id_user;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setId_user(Long id_user) {
-        this.id_user = id_user;
+    public void setUserId(Long id_user) {
+        this.userId = id_user;
     }
 
     public String getName() {
@@ -82,18 +83,18 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(id_user, user.id_user) && Objects.equals(name, user.name) && Objects.equals(telegram, user.telegram) && Objects.equals(role, user.role) && Objects.equals(password, user.password);
+        return Objects.equals(userId, user.userId) && Objects.equals(name, user.name) && Objects.equals(telegram, user.telegram) && Objects.equals(role, user.role) && Objects.equals(password, user.password);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id_user, name, telegram, role, password);
+        return Objects.hash(userId, name, telegram, role, password);
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "id_user=" + id_user +
+                "id_user=" + userId +
                 ", name='" + name + '\'' +
                 ", telegram='" + telegram + '\'' +
                 ", role=" + role +
