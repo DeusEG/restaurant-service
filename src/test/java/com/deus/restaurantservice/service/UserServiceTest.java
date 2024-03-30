@@ -1,17 +1,15 @@
-package com.deus.restaurantservice.service.impl;
+package com.deus.restaurantservice.service;
 
-import com.deus.restaurantservice.model.Role;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.RoleRepository;
 import com.deus.restaurantservice.repository.UserRepository;
-import com.deus.restaurantservice.service.UserService;
+import com.deus.restaurantservice.service.impl.UserServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.EntityManager;
 

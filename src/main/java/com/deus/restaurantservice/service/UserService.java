@@ -9,4 +9,5 @@ public interface UserService {
     User createUser(String name, String telegram, String password);
     List<User> getAllUser();
     User findByTelegram(String telegram);
+    User updateUser(User user, String userName, String password);
 }

@@ -16,6 +16,7 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
 
     private final static String INCORRECT_TELEGRAM_ERROR_MESSAGE = "Укажите телеграм без символа '@'";
     private final static String SHORT_PASSWORD_ERROR_MESSAGE = "Ваш пароль слишком короткий";
+    private final static String USERNAME_ERROR_MESSAGE = "Вы забыли ввести имя";
     private final static String EMPTY_TELEGRAM_ERROR_MESSAGE = "Поле телеграм не может быть пустым";
     private final static String DELETE_USER_ERROR = "Нельзя удалить пользователя с ролью MODER";
     private final static Integer PASSWORD_MIN_LENGTH = 5;
@@ -54,6 +55,21 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
     }
 
     @Override
+    @Transactional
+    public User updateUser(User user, String userName, String password) {
+        if (!userName.isEmpty()) {
+            throw new IncorrectRegistrationData(USERNAME_ERROR_MESSAGE);
+        }
+        if (!password.isEmpty()) {
+            throw new IncorrectRegistrationData(SHORT_PASSWORD_ERROR_MESSAGE);
+        }
+        user.setPassword(passwordEncoder.encode(password));
+        user.setName(userName);
+        userRepository.save(user);
+        return user;
+    }
+
+    @Override
     public User createUser(String name, String telegram, String password) {
         if (telegram == null) {
             throw new IncorrectRegistrationData(EMPTY_TELEGRAM_ERROR_MESSAGE);
@@ -62,7 +78,7 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
         } else if (password == null || password.length() < PASSWORD_MIN_LENGTH) {
             throw new IncorrectRegistrationData(SHORT_PASSWORD_ERROR_MESSAGE);
         }
-        var user =  new User(name, telegram, roleRepository.findByName(USER_ROLE),
+        var user = new User(name, telegram, roleRepository.findByName(USER_ROLE),
                 passwordEncoder.encode(password));
         userRepository.save(user);
         return user;

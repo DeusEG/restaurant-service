@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div>
+    <h1>Данные пользователя</h1>
+    <table>
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Телеграм</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${user.getName()}"></td>
+            <td th:text="${user.getTelegram()}"></td>
+
+        </tr>
+        </tbody>
+    </table>
+    <div>
+        <form method="get" action="/user/info/change">
+            <button type="submit">Изменить</button>
+        </form>
+    </div>
+
+</div>
+</body>
+</html>
