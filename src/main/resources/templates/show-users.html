@@ -9,6 +9,11 @@
     <p class="alert alert-danger" th:text="${errorMessage}"></p>
 </div>
 <div th:if="${errorMessage==null}">
+    <div>
+        <form method="get" action="/user/info">
+            <button type="submit">Мой профиль</button>
+        </form>
+    </div>
     <form method="get" action="/logout">
         <button type="submit">Выйти</button>
     </form>

@@ -5,27 +5,34 @@
     <title>Ваши бронирования</title>
 </head>
 <body>
-<table>
-    <thead>
-    <tr>
-        <th>Номер столика</th>
-        <th>Адрес ресторана</th>
-        <th>Дата и Время</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="reservation : ${reservations}">
-        <td th:text="${reservation.getTable().getId()}"></td>
-        <td th:text="${reservation.getTable().getRestaurant().getAddress()}"></td>
-        <td th:text="${#temporals.format(reservation.getDateTime(), 'dd-MM-yyyy HH:mm')}"></td>
-    </tr>
-    </tbody>
-</table>
 <form method="post" action="/logout">
     <button type="submit">Выйти</button>
 </form>
-<form method="get" action="/restaurant/show">
-    <button type="submit">Перейти к списку рестаранов</button>
-</form>
+<div>
+    <form method="get" action="/user/info">
+        <button type="submit">Мой профиль</button>
+    </form>
+</div>
+<div>
+    <table>
+        <thead>
+        <tr>
+            <th>Номер столика</th>
+            <th>Адрес ресторана</th>
+            <th>Дата и Время</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="reservation : ${reservations}">
+            <td th:text="${reservation.getTable().getId()}"></td>
+            <td th:text="${reservation.getTable().getRestaurant().getAddress()}"></td>
+            <td th:text="${#temporals.format(reservation.getDateTime(), 'dd-MM-yyyy HH:mm')}"></td>
+        </tr>
+        </tbody>
+    </table>
+    <form method="get" action="/restaurant/show">
+        <button type="submit">Перейти к списку рестаранов</button>
+    </form>
+</div>
 </body>
 </html>
