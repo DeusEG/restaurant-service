@@ -15,7 +15,7 @@ public interface UserService {
      * @return         Телеграм пользователя
      * @throws DeleteModerException если пытаются удалить пользователя с ролью MODER
      */
-    String deleteByTelegram(String telegram);
+    Integer deleteByTelegram(String telegram);
 
     /**
      * Метод для создания пользователя

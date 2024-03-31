@@ -7,5 +7,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
     User findByTelegram(String telegram);
-    String removeByTelegram(String telegram);
+    Integer removeByTelegram(String telegram);
 }

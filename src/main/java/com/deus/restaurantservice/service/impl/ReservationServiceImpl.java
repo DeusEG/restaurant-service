@@ -72,7 +72,7 @@ public class ReservationServiceImpl implements ReservationService {
      * @return           Возвращает объект типа TableData
      * @throws IncorrectRegistrationDataException если уже существует бронирование, за один час и после
      */
-    private TableData checkAlreadyExistReservations(LocalDateTime dateTime, Long table) {
+    public TableData checkAlreadyExistReservations(LocalDateTime dateTime, Long table) {
         var tableData = tableDataServiceImpl.getTableById(table);
         var allReservationByTable = reservationRepository.findAllByTable(tableData);
         for (Reservation reservation : allReservationByTable) {

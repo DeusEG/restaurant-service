@@ -49,7 +49,7 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
 
     @Override
     @Transactional
-    public String deleteByTelegram(String telegram) {
+    public Integer deleteByTelegram(String telegram) {
         var user = findByTelegram(telegram);
         if (user.getRole().getName().equals(MODER_ROLE)) {
             throw new DeleteModerException(DELETE_USER_ERROR);
@@ -86,4 +86,5 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
         userRepository.save(user);
         return user;
     }
+
 }
