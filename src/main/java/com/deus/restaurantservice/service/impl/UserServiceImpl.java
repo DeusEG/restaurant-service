@@ -18,7 +18,8 @@ import java.util.List;
 public class UserServiceImpl implements com.deus.restaurantservice.service.UserService {
 
     private final static String INCORRECT_TELEGRAM_ERROR_MESSAGE = "Укажите телеграм без символа '@'";
-    private final static String SHORT_PASSWORD_ERROR_MESSAGE = "Ваш пароль слишком короткий";
+    private final static String SHORT_PASSWORD_ERROR_MESSAGE = "Ваш пароль слишком короткий. " +
+            "Пароль должен содержать более 5 символов";
     private final static String USERNAME_ERROR_MESSAGE = "Вы забыли ввести имя";
     private final static String EMPTY_TELEGRAM_ERROR_MESSAGE = "Поле телеграм не может быть пустым";
     private final static String DELETE_USER_ERROR = "Нельзя удалить пользователя с ролью MODER";
