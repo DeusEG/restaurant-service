@@ -13,9 +13,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 
-/**
- * Сервис для работы с бронированиями
- */
 @Service
 public class ReservationServiceImpl implements ReservationService {
     private static final String DATE_TIME_RESERVATION_ERROR_MESSAGE = "Некорректные дата и/или время";
@@ -29,28 +26,11 @@ public class ReservationServiceImpl implements ReservationService {
         this.tableDataServiceImpl = tableDataServiceImpl;
     }
 
-    /**
-     * Метод для получения всех бронирований пользователя
-     *
-     * @return Список бронирований пользователя
-     */
     @Override
     public List<Reservation> getAllReservationByUser(User user) {
         return reservationRepository.findAllByUser(user);
     }
 
-    /**
-     * Метод для создания бронирования
-     *
-     * @param user          Пользователь, осуществляющий бронирование
-     * @param table         Идентификатор стола, который броинрует пользователь
-     * @param date          Дата бронирования
-     * @param time          Время бронирвоания
-     * @param comment       Комментарий к бронированию
-     * @param numberOfSeats Количетсво гостей для бронирования
-     * @return              Бронирование
-     * @throws IncorrectRegistrationDataException если количество мест равно нулю или меньше, чем есть у стола
-     */
     @Override
     public Reservation createReservation(User user, Long table, String date, String time,
                                          String comment, Integer numberOfSeats) {

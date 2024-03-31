@@ -10,7 +10,9 @@ import org.springframework.stereotype.Component;
 import org.telegram.telegrambots.bots.TelegramLongPollingBot;
 import org.telegram.telegrambots.meta.api.methods.send.SendMessage;
 import org.telegram.telegrambots.meta.api.objects.Update;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.InlineKeyboardMarkup;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.ReplyKeyboardMarkup;
+import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.InlineKeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardButton;
 import org.telegram.telegrambots.meta.api.objects.replykeyboard.buttons.KeyboardRow;
 import org.telegram.telegrambots.meta.exceptions.TelegramApiException;
@@ -84,7 +86,6 @@ public class TelegramBot extends TelegramLongPollingBot {
         return userService.findByTelegram(userTgName);
     }
 
-
     /**
      * Метод для создания и отображения кнопок в телеграм боте
      *
@@ -98,8 +99,8 @@ public class TelegramBot extends TelegramLongPollingBot {
         replyKeyboardMarkup.setOneTimeKeyboard(true);
 
         List<KeyboardRow> keyboard = new ArrayList<>();
-
         KeyboardRow keyboardFirstRow = new KeyboardRow();
+
         KeyboardButton userExistButton = new KeyboardButton("Проверить регистрацию");
         KeyboardButton userReservationButton = new KeyboardButton("Мои бронирования");
 
@@ -107,10 +108,9 @@ public class TelegramBot extends TelegramLongPollingBot {
         keyboardFirstRow.add(userReservationButton);
 
         keyboard.add(keyboardFirstRow);
-
         replyKeyboardMarkup.setKeyboard(keyboard);
 
-        SendMessage message = new SendMessage();
+        var message = new SendMessage();
         message.setChatId(chatId);
         message.setText("Выберите одну из кнопок:");
         message.setReplyMarkup(replyKeyboardMarkup);
@@ -120,6 +120,28 @@ public class TelegramBot extends TelegramLongPollingBot {
         } catch (TelegramApiException e) {
             e.printStackTrace();
         }
+    }
+
+    public InlineKeyboardMarkup createDateTimeKeyboard() {
+        InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
+        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
+
+        // Создаем кнопку для выбора даты
+        List<InlineKeyboardButton> dateRow = new ArrayList<>();
+        InlineKeyboardButton dateButton = new InlineKeyboardButton("Выбрать дату");
+        dateButton.setCallbackData("date");
+        dateRow.add(dateButton);
+        rowList.add(dateRow);
+
+        // Создаем кнопку для выбора времени
+        List<InlineKeyboardButton> timeRow = new ArrayList<>();
+        InlineKeyboardButton timeButton = new InlineKeyboardButton("Выбрать время");
+        timeButton.setCallbackData("time");
+        timeRow.add(timeButton);
+        rowList.add(timeRow);
+
+        keyboardMarkup.setKeyboard(rowList);
+        return keyboardMarkup;
     }
 
     /**
@@ -158,7 +180,7 @@ public class TelegramBot extends TelegramLongPollingBot {
      *
      */
     private void sendMessage(Long idChat, String message) {
-        SendMessage sendMessage = new SendMessage();
+        var sendMessage = new SendMessage();
         sendMessage.setChatId(idChat);
         sendMessage.setText(message);
         try {

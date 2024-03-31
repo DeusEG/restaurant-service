@@ -1,9 +1,7 @@
 package com.deus.restaurantservice.controller;
 
-import com.deus.restaurantservice.model.Restaurant;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.service.CommentService;
-import com.deus.restaurantservice.service.ReservationService;
 import com.deus.restaurantservice.service.RestaurantService;
 import com.deus.restaurantservice.service.UserService;
 import org.springframework.stereotype.Controller;
@@ -40,10 +38,10 @@ public class AdminController {
      * @return        Страница для отображения и редактирования комментариев ресторана
      */
     @GetMapping()
-    public String showCommentsByRestaurantForAdminRole(Model model, HttpSession session) {
+    public String showCommentsByRestaurantForAdmin(Model model, HttpSession session) {
         var user = (User) session.getAttribute("user");
         if (!user.getRole().getName().equals("ADMIN")) {
-            model.addAttribute("errorMessage", "Отказно в доступе");
+            model.addAttribute("errorMessage", "Отказано в доступе");
         }
         var restaurant = restaurantService.getRestaurantByAdmin(user.getUserId());
         model.addAttribute("comments", commentService.getAllCommentsByRestaurant(restaurant));
@@ -57,7 +55,7 @@ public class AdminController {
      * @return          Перенаправляет на страницу отображения и редактирования комментариев ресторана
      */
     @DeleteMapping("/{commentId}")
-    public String deleteUser(@PathVariable String commentId) {
+    public String deleteComment(@PathVariable String commentId) {
         commentService.deleteCommentById(commentId);
         return "redirect:/admin";
     }

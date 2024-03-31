@@ -35,7 +35,7 @@ public class ModerController {
     public String showModerPanel(Model model, HttpSession session) {
         var user = (User) session.getAttribute("user");
         if (!user.getRole().getName().equals("MODER")) {
-            model.addAttribute("errorMessage", "Отказно в доступе");
+            model.addAttribute("errorMessage", "Отказано в доступе");
         }
         model.addAttribute("users", userService.getAllUser());
         return "show-users";

@@ -16,7 +16,7 @@ import javax.persistence.EntityManager;
 import static org.junit.jupiter.api.Assertions.*;
 
 @DataJpaTest
-class UserServiceImplTest {
+class UserServiceTest {
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -46,7 +46,8 @@ class UserServiceImplTest {
         String telegram = "aaa";
         var user = userService.findByTelegram(telegram);
         var role = roleRepository.findByName("USER");
-        var expectedUser = new User(3L,"aaa", "aaa", role, "$2a$10$H2u5Ljr9Xp2ACuVEbmjaLuLTsy99GjG36zoKjiiq0b0I0O8WIc4t6");
+        var expectedUser = new User(3L,"aaa", "aaa",
+                role, "$2a$10$H2u5Ljr9Xp2ACuVEbmjaLuLTsy99GjG36zoKjiiq0b0I0O8WIc4t6");
         assertEquals(expectedUser, user);
     }
 

@@ -37,34 +37,16 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
         this.passwordEncoder = passwordEncoder;
     }
 
-    /**
-     * Метод для получения всех пользователей
-     *
-     * @return Список всех пользователей
-     */
     @Override
     public List<User> getAllUser() {
         return userRepository.findAll();
     }
 
-    /**
-     * Метод для поиска пользователя по его телеграму
-     *
-     * @param telegram    Телеграм пользователя
-     * @return            Пользователь
-     */
     @Override
     public User findByTelegram(String telegram) {
         return userRepository.findByTelegram(telegram);
     }
 
-    /**
-     * Метод для удаления пользователя по его телеграму
-     *
-     * @param telegram Телеграм пользователя
-     * @return         Телеграм пользователя
-     * @throws DeleteModerException если пытаются удалить пользователя с ролью MODER
-     */
     @Override
     @Transactional
     public String deleteByTelegram(String telegram) {
@@ -75,18 +57,9 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
         return userRepository.removeByTelegram(telegram);
     }
 
-    /**
-     * Метод для изменения имени и пароля пользователя
-     *
-     * @param user     Пользователь
-     * @param userName Имя пользователя
-     * @param password Пароль пользователя
-     * @return         Объект типа User
-     * @throws IncorrectRegistrationDataException если некорректно указаны данные при изменение
-     */
     @Override
     @Transactional
-    public User updateUser(User user, String userName, String password) {
+    public User updateUserInfo(User user, String userName, String password) {
         if (userName.isEmpty()) {
             throw new IncorrectRegistrationDataException(USERNAME_ERROR_MESSAGE);
         }
@@ -99,15 +72,6 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
         return user;
     }
 
-    /**
-     * Метод для создания пользователя
-     *
-     * @param name      Имя пользователя
-     * @param telegram  Телеграм пользователя
-     * @param password  Пароль пользователя
-     * @return          Объект типа User
-     * @throws IncorrectRegistrationDataException если некорректно указаны данные при регистрации
-     */
     @Override
     public User createUser(String name, String telegram, String password) {
         if (telegram == null) {

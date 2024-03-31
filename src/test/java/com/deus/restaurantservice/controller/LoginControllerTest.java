@@ -1,7 +1,7 @@
 package com.deus.restaurantservice.controller;
 
 import com.deus.restaurantservice.security.CustomDetailsService;
-import com.deus.restaurantservice.service.UserService;
+import com.deus.restaurantservice.service.UserService;;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -14,7 +14,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(LoginController.class)
 class LoginControllerTest {
     @MockBean
-    private UserService userService;
+    UserService userService;
     @Autowired
     MockMvc mockMvc;
     @MockBean

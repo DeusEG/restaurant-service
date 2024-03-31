@@ -36,7 +36,7 @@ public class RestaurantController {
      * @return        Страница для отображения всех ресторанов
      */
     @GetMapping("/show")
-    public String getAllRestaurantInfo(Model model) {
+    public String getAllRestaurant(Model model) {
         model.addAttribute("restaurants", restaurantService.getAllRestaurant());
         return "restaurant-info-list";
     }

@@ -44,7 +44,7 @@ public class UserController {
      * @return        Форма для изменения данных пользователя
      */
     @GetMapping("/info/change")
-    public String changeUserInfo(HttpSession session, Model model) {
+    public String showFormChangeUserInfo(HttpSession session, Model model) {
         var user = (User) session.getAttribute("user");
         model.addAttribute("user", user);
         return "change-user-info";
@@ -59,9 +59,9 @@ public class UserController {
      * @return          Перенаправление на форму аутентификации (в связи со сменой пароля)
      */
     @PatchMapping("/info/change/")
-    public String setLinkForbiddenStatus(HttpSession session, String password, String name) {
+    public String changeUserInfo(HttpSession session, String password, String name) {
         var user = (User) session.getAttribute("user");
-        userService.updateUser(user, name, password);
+        userService.updateUserInfo(user, name, password);
         return "redirect:/login";
     }
 }
