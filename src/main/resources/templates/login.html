@@ -1,23 +1,61 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <meta charset="UTF-8">
-    <title>Авторизация</title>
+    <title>Войти</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 400px;
+            margin-top: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .btn-primary {
+            width: 100%;
+        }
+
+        .error-message {
+            color: red;
+            margin-bottom: 20px;
+        }
+
+        .register-link {
+            margin-top: 15px;
+            text-align: center;
+        }
+    </style>
 </head>
 <body>
-<form method="post">
-    <h1>Пожалуйста, войдите в систему</h1>
-    <input type="text" placeholder="Введите телеграм" id="username" name="username">
-    <input type="password" placeholder="Введите пароль" id="password" name="password">
-    <button type="submit">Войти</button>
-</form>
-<div th:if="${param.error}" class="error-message">
-    Неправильное имя пользователя или пароль.
-</div>
-<div>
-    <form method="get" action="/registration">
-        <button type="submit">Создать аккаунт</button>
+<div class="container">
+    <div th:if="${param.error}" class="error-message">
+        Неправильное имя пользователя или пароль.
+    </div>
+    <form method="post">
+        <h1>Пожалуйста, войдите в систему</h1>
+        <div class="form-group">
+            <input type="text" class="form-control" placeholder="Введите телеграм" id="username" name="username">
+        </div>
+        <div class="form-group">
+            <input type="password" class="form-control" placeholder="Введите пароль" id="password" name="password">
+        </div>
+        <button class="btn btn-primary" type="submit">Войти</button>
     </form>
+    <div class="register-link">
+        <a class="btn btn-link" th:href="@{/registration}">Регистрация</a>
+    </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

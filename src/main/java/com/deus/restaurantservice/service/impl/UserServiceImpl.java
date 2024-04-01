@@ -31,7 +31,6 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
     private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
 
-
     public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;

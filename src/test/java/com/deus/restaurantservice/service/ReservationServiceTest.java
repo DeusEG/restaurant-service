@@ -39,7 +39,6 @@ class ReservationServiceTest {
 
     @Test
     void test_create_reservation() {
-        // Arrange
         var reservationService = new ReservationServiceImpl(reservationRepository, tableDataServiceImpl);
         var user = new User();
         var tableId = 1L;

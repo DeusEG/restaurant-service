@@ -38,7 +38,7 @@ public class LoginController {
      * @return        Перенаправление на страницу модератора, администратора или на страницу для пользователей
      */
     @GetMapping("/authorization")
-    public String distribution(HttpSession session) {
+    public String authorization(HttpSession session) {
         var user = userService.findByTelegram(SecurityContextHolder.getContext().getAuthentication().getName());
         session.setAttribute("user", user);
         if (user.getRole().getName().equals("MODER")) {
