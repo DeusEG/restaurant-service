@@ -17,4 +17,9 @@ VALUES ('Первомайский проспект 131', 1),
 INSERT INTO table_data (id_restaurant, number_of_seats)
 VALUES (1, 10),
        (1, 4),
-       (2, 8);	   
+       (2, 6),
+       (2, 8);
+
+INSERT INTO comment_data (id_user, id_restaurant, comment_text)
+VALUES (3, 2, 'Отличное место, хорошая еда!'),
+       (3, 1, 'ДЕЛИШЕС');
