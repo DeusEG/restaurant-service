@@ -37,7 +37,7 @@ class ReservationControllerTest {
     CustomDetailsService customDetailsService;
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser
     void test_get_all_reservation() throws Exception {
         var user = new User();
 

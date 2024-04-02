@@ -33,4 +33,12 @@ public interface CommentService {
      * @return      Идентификатор удалённого комменатрия
      */
     Long deleteCommentById(String id);
+
+    /**
+     * Метод для поиска комментария по его идентификатору
+     *
+     * @param id    Идентификатор комментария
+     * @return      Идентификатор удалённого комменатрия
+     */
+    Comment findCommentById(Long id);
 }
