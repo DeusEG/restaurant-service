@@ -24,7 +24,6 @@ import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class ReservationServiceTest {
-
     @Autowired
     EntityManager entityManager;
     @Mock

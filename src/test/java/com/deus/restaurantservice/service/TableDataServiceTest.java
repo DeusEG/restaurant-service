@@ -2,13 +2,11 @@ package com.deus.restaurantservice.service;
 
 import com.deus.restaurantservice.model.Restaurant;
 import com.deus.restaurantservice.model.TableData;
-import com.deus.restaurantservice.repository.RoleRepository;
 import com.deus.restaurantservice.repository.TableDataRepository;
 import com.deus.restaurantservice.service.impl.TableDataServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -22,13 +20,11 @@ import static org.mockito.Mockito.when;
 
 @DataJpaTest
 class TableDataServiceTest {
-
     @Autowired
     EntityManager entityManager;
     @MockBean
     TableDataRepository tableDataRepository;
-
-    TableDataServiceImpl tableDataService;
+    TableDataService tableDataService;
 
     @BeforeEach
     void setUp() {

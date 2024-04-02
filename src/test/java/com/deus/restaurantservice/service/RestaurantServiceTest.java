@@ -2,30 +2,28 @@ package com.deus.restaurantservice.service;
 
 import com.deus.restaurantservice.model.Restaurant;
 import com.deus.restaurantservice.repository.RestaurantRepository;
+import com.deus.restaurantservice.repository.UserRepository;
 import com.deus.restaurantservice.service.impl.RestaurantServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.EntityManager;
 
-import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
-
-@ExtendWith(MockitoExtension.class)
+@DataJpaTest
 class RestaurantServiceTest {
-    @Mock
+    @Autowired
     EntityManager entityManager;
-    @Mock
+    @Autowired
     RestaurantRepository restaurantRepository;
-    RestaurantServiceImpl restaurantService;
+    @Autowired
+    UserRepository userRepository;
+    RestaurantService restaurantService;
 
     @BeforeEach
     void setUp() {
@@ -37,37 +35,30 @@ class RestaurantServiceTest {
         entityManager.clear();
     }
 
-
     @Test
     void test_get_all_restaurant() {
-        var mockRestaurants = List.of(new Restaurant(), new Restaurant());
-        when(restaurantRepository.findAll()).thenReturn(mockRestaurants);
         var restaurants = restaurantService.getAllRestaurant();
-
         assertEquals(2, restaurants.size());
     }
 
     @Test
     void test_get_restaurant_by_id() {
         var restaurantId = 1L;
-        var mockRestaurant = new Restaurant();
-        when(restaurantRepository.getRestaurantById(restaurantId)).thenReturn(mockRestaurant);
+        var user = userRepository.findByTelegram("qqq");
+        var restaurant2 = new Restaurant(1L, "Первомайский проспект 131", user);
+        var restaurant = restaurantService.getRestaurantById(restaurantId);
 
-        var retrievedRestaurant = restaurantService.getRestaurantById(restaurantId);
-
-        assertNotNull(retrievedRestaurant);
-        assertEquals(mockRestaurant, retrievedRestaurant);
+        assertNotNull(restaurant);
+        assertEquals(restaurant2, restaurant);
     }
 
     @Test
     void test_get_restaurant_by_admin() {
-        var adminId = 1L;
-        var mockRestaurant = new Restaurant();
-        when(restaurantRepository.findRestaurantByAdmin_UserId(adminId)).thenReturn(mockRestaurant);
+        var user = userRepository.findByTelegram("qqq");
+        var restaurant2 = new Restaurant(1L, "Первомайский проспект 131", user);
+        var restaurant = restaurantService.getRestaurantByAdmin(1L);
 
-        var retrievedRestaurant = restaurantService.getRestaurantByAdmin(adminId);
-
-        assertNotNull(retrievedRestaurant);
-        assertEquals(mockRestaurant, retrievedRestaurant);
+        assertNotNull(restaurant);
+        assertEquals(restaurant2, restaurant);
     }
 }

@@ -1,7 +1,6 @@
 package com.deus.restaurantservice.service;
 
 import com.deus.restaurantservice.exception.IncorrectCommentLengthException;
-import com.deus.restaurantservice.model.Comment;
 import com.deus.restaurantservice.model.Restaurant;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.CommentRepository;
@@ -10,7 +9,6 @@ import com.deus.restaurantservice.repository.UserRepository;
 import com.deus.restaurantservice.service.impl.CommentServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;

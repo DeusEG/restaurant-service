@@ -7,6 +7,7 @@ import com.deus.restaurantservice.model.TableData;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.ReservationRepository;
 import com.deus.restaurantservice.service.ReservationService;
+import com.deus.restaurantservice.service.TableDataService;
 import com.deus.restaurantservice.utils.DateTimeUtils;
 import org.springframework.stereotype.Service;
 
@@ -19,11 +20,11 @@ public class ReservationServiceImpl implements ReservationService {
     private static final String RESERVATION_ALREADY_EXIST_ERROR_MESSAGE = "Это время занято, пожалуйста, выберите другое время";
     private static final String NUMBER_OF_SEATS_ERROR_MESSAGE = "Вы не выбрали количество мест или оно меньше, чем вам нужно";
     private final ReservationRepository reservationRepository;
-    private final TableDataServiceImpl tableDataServiceImpl;
+    private final TableDataService tableDataService;
 
-    public ReservationServiceImpl(ReservationRepository reservationRepository, TableDataServiceImpl tableDataServiceImpl) {
+    public ReservationServiceImpl(ReservationRepository reservationRepository, TableDataService tableDataService) {
         this.reservationRepository = reservationRepository;
-        this.tableDataServiceImpl = tableDataServiceImpl;
+        this.tableDataService = tableDataService;
     }
 
     @Override
@@ -73,7 +74,7 @@ public class ReservationServiceImpl implements ReservationService {
      * @throws IncorrectRegistrationDataException если уже существует бронирование, за один час и после
      */
     public TableData checkAlreadyExistReservations(LocalDateTime dateTime, Long table) {
-        var tableData = tableDataServiceImpl.getTableById(table);
+        var tableData = tableDataService.getTableById(table);
         var allReservationByTable = reservationRepository.findAllByTable(tableData);
         for (Reservation reservation : allReservationByTable) {
             var existingDateTime = reservation.getDateTime();
