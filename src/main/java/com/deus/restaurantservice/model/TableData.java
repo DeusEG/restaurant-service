@@ -22,8 +22,7 @@ public class TableData {
     public TableData() {
     }
 
-    public TableData(Long id, String comment, Integer numberOfSeats, Restaurant restaurant) {
-        this.id = id;
+    public TableData(Integer numberOfSeats, Restaurant restaurant) {
         this.restaurant = restaurant;
         this.numberOfSeats = numberOfSeats;
     }

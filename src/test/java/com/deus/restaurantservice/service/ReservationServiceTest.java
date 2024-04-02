@@ -6,7 +6,6 @@ import com.deus.restaurantservice.model.TableData;
 import com.deus.restaurantservice.model.User;
 import com.deus.restaurantservice.repository.ReservationRepository;
 import com.deus.restaurantservice.service.impl.ReservationServiceImpl;
-import com.deus.restaurantservice.service.impl.TableDataServiceImpl;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import javax.persistence.EntityManager;
-
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +27,7 @@ class ReservationServiceTest {
     @Mock
     ReservationRepository reservationRepository;
     @Mock
-    TableDataServiceImpl tableDataServiceImpl;
+    TableDataService tableDataService;
 
     @AfterEach
     void tearDown() {
@@ -38,7 +36,7 @@ class ReservationServiceTest {
 
     @Test
     void test_create_reservation() {
-        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataServiceImpl);
+        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataService);
         var user = new User();
         var tableId = 1L;
         var date = "2024-04-04";
@@ -51,7 +49,7 @@ class ReservationServiceTest {
 
         var dateTime = LocalDateTime.of(2024, 4, 4, 19, 0);
 
-        when(tableDataServiceImpl.getTableById(tableId)).thenReturn(tableData);
+        when(tableDataService.getTableById(tableId)).thenReturn(tableData);
 
         var createdReservation = reservationService.createReservation(user, tableId, date, time, comment, numberOfSeats);
 
@@ -65,7 +63,7 @@ class ReservationServiceTest {
 
     @Test
     void test_create_with_incorrect_number_of_seats() {
-        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataServiceImpl);
+        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataService);
         var user = new User();
         var tableId = 1L;
         var date = "2024-01-30";
@@ -76,7 +74,7 @@ class ReservationServiceTest {
         var tableData = new TableData();
         tableData.setNumberOfSeats(6);
 
-        when(tableDataServiceImpl.getTableById(tableId)).thenReturn(tableData);
+        when(tableDataService.getTableById(tableId)).thenReturn(tableData);
 
 
         assertThrows(IncorrectReservationException.class, () -> {
@@ -86,7 +84,7 @@ class ReservationServiceTest {
 
     @Test
     void test_get_reservation_by_user() {
-        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataServiceImpl);
+        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataService);
         var user = new User();
         var firstReservation = new Reservation();
         var secondReservation = new Reservation();
@@ -103,14 +101,14 @@ class ReservationServiceTest {
 
     @Test
     void test_check_reservation_already_exist() {
-        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataServiceImpl);
+        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataService);
         var dateTime = LocalDateTime.of(2024, 4, 1, 18, 0);
         var tableId = 1L;
 
         var tableData = new TableData();
         tableData.setNumberOfSeats(4);
 
-        when(tableDataServiceImpl.getTableById(tableId)).thenReturn(tableData);
+        when(tableDataService.getTableById(tableId)).thenReturn(tableData);
         when(reservationRepository.findAllByTable(tableData)).thenReturn(Collections.emptyList());
 
         var resultTableData = reservationService.checkAlreadyExistReservations(dateTime, tableId);
@@ -121,7 +119,7 @@ class ReservationServiceTest {
 
     @Test
     void test_check_reservation_already_exist_with_throw_exception() {
-        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataServiceImpl);
+        var reservationService = new ReservationServiceImpl(reservationRepository, tableDataService);
         var dateTime = LocalDateTime.of(2024, 4, 1, 18, 0);
         var tableId = 1L;
         var tableData = new TableData();
@@ -129,7 +127,7 @@ class ReservationServiceTest {
         var existingReservation = new Reservation();
         existingReservation.setDateTime(LocalDateTime.of(2024, 4, 1, 17, 30));
 
-        when(tableDataServiceImpl.getTableById(tableId)).thenReturn(tableData);
+        when(tableDataService.getTableById(tableId)).thenReturn(tableData);
         when(reservationRepository.findAllByTable(tableData)).thenReturn(Collections.singletonList(existingReservation));
 
         assertThrows(IncorrectReservationException.class, () -> {
