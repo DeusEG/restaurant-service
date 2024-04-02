@@ -20,7 +20,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(RestaurantController.class)
 class RestaurantControllerTest {
     @MockBean
-    private UserService userService;
+    UserService userService;
     @MockBean
     RestaurantService restaurantService;
     @MockBean
@@ -31,7 +31,7 @@ class RestaurantControllerTest {
     CustomDetailsService customDetailsService;
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser()
     void test_get_all_restaurant() throws Exception {
         mockMvc.perform(get("/restaurant/show"))
                 .andExpect(status().isOk())
@@ -40,7 +40,7 @@ class RestaurantControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser()
     void test_show_comments_by_restaurant() throws Exception {
         var restaurant = new Restaurant();
         when(restaurantService.getRestaurantById(1L)).thenReturn(restaurant);
@@ -54,7 +54,7 @@ class RestaurantControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser()
     void test_create_comment() throws Exception {
         var user = new User();
         var restaurant = new Restaurant();

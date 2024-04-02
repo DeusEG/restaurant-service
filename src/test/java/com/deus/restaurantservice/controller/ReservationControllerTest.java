@@ -52,7 +52,7 @@ class ReservationControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser()
     void test_show_form_new_reservation() throws Exception {
         var restaurantId = 1L;
         var restaurant = new Restaurant();
@@ -70,7 +70,7 @@ class ReservationControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser()
     void test_show_create_reservation() throws Exception {
         var date = "2024-04-01";
         var time = "18:00";

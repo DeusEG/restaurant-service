@@ -15,7 +15,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 @WebMvcTest(UserController.class)
 class UserControllerTest {
-
     @MockBean
     UserService userService;
     @Autowired
@@ -24,7 +23,7 @@ class UserControllerTest {
     CustomDetailsService customDetailsService;
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser()
     void test_show_user_info() throws Exception {
         var user = new User();
 
@@ -35,7 +34,7 @@ class UserControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser()
     void test_show_form_change_info() throws Exception {
         var user = new User();
 

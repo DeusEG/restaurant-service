@@ -43,7 +43,7 @@ class AdminControllerTest {
     }
 
     @Test
-    @WithMockUser(roles = "USER")
+    @WithMockUser()
     void test_show_admin_panel_access_denied() throws Exception {
         var role = new Role("USER");
         var user = new User("name", "telegram",
