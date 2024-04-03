@@ -20,12 +20,10 @@ import javax.servlet.http.HttpSession;
 @RequestMapping("/admin")
 public class AdminController {
 
-    private final UserService userService;
     private final RestaurantService restaurantService;
     private final CommentService commentService;
 
-    public AdminController(UserService userService, RestaurantService restaurantService, CommentService commentService) {
-        this.userService = userService;
+    public AdminController(RestaurantService restaurantService, CommentService commentService) {
         this.restaurantService = restaurantService;
         this.commentService = commentService;
     }

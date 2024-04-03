@@ -62,7 +62,6 @@ public class TelegramBot extends TelegramLongPollingBot {
      * Метод для получения и обработки сообщений от пользователя
      *
      * @param update Данные поулчаемые от пользователя
-     *
      */
     @Override
     public void onUpdateReceived(Update update) {
@@ -89,8 +88,7 @@ public class TelegramBot extends TelegramLongPollingBot {
     /**
      * Метод для создания и отображения кнопок в телеграм боте
      *
-     * @param chatId  Идентификатор чата с пользователем
-     *
+     * @param chatId Идентификатор чата с пользователем
      */
     private void sendButtonMessage(Long chatId) {
         var replyKeyboardMarkup = new ReplyKeyboardMarkup();
@@ -122,34 +120,11 @@ public class TelegramBot extends TelegramLongPollingBot {
         }
     }
 
-    public InlineKeyboardMarkup createDateTimeKeyboard() {
-        InlineKeyboardMarkup keyboardMarkup = new InlineKeyboardMarkup();
-        List<List<InlineKeyboardButton>> rowList = new ArrayList<>();
-
-        // Создаем кнопку для выбора даты
-        List<InlineKeyboardButton> dateRow = new ArrayList<>();
-        InlineKeyboardButton dateButton = new InlineKeyboardButton("Выбрать дату");
-        dateButton.setCallbackData("date");
-        dateRow.add(dateButton);
-        rowList.add(dateRow);
-
-        // Создаем кнопку для выбора времени
-        List<InlineKeyboardButton> timeRow = new ArrayList<>();
-        InlineKeyboardButton timeButton = new InlineKeyboardButton("Выбрать время");
-        timeButton.setCallbackData("time");
-        timeRow.add(timeButton);
-        rowList.add(timeRow);
-
-        keyboardMarkup.setKeyboard(rowList);
-        return keyboardMarkup;
-    }
-
     /**
      * Метод для отображения пользователю данных о его бронированиях
      *
-     * @param chatId  Идентификатор чата с пользователем
-     * @param user    Пользователь
-     *
+     * @param chatId Идентификатор чата с пользователем
+     * @param user   Пользователь
      */
     private void printUserReservations(User user, Long chatId) {
         var reservations = reservationService.getAllReservationByUser(user);
@@ -163,8 +138,8 @@ public class TelegramBot extends TelegramLongPollingBot {
     /**
      * Метод для оповещения пользваотеля о его регистрации в системе
      *
-     * @param userTgName  Телеграм пользователя
-     * @return            Сообещние о состоянии регистрации в системе
+     * @param userTgName Телеграм пользователя
+     * @return Сообещние о состоянии регистрации в системе
      */
     private String checkUserExist(String userTgName) {
         var userList = userService.getAllUser();
@@ -175,9 +150,8 @@ public class TelegramBot extends TelegramLongPollingBot {
     /**
      * Метод для отправки сообщений пользователю в чат
      *
-     * @param idChat   Идентификатор чата
-     * @param message  Содержание сообщения
-     *
+     * @param idChat  Идентификатор чата
+     * @param message Содержание сообщения
      */
     private void sendMessage(Long idChat, String message) {
         var sendMessage = new SendMessage();

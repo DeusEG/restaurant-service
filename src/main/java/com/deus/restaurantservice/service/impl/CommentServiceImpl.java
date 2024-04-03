@@ -29,7 +29,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public Comment createComment(User user, Restaurant restaurant, String commentText) {
-        if (commentText.length() < 5 || commentText.length() > 300) {
+        if (commentText.length() < MIN_COMMENT_LENGTH || commentText.length() > MAX_COMMENT_LENGTH) {
             throw new IncorrectCommentLengthException(
                     String.format(COMMENT_ERROR_MESSAGE, MIN_COMMENT_LENGTH, MAX_COMMENT_LENGTH));
         }
