@@ -48,7 +48,6 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
     }
 
     @Override
-    @Transactional
     public Integer deleteByTelegram(String telegram) {
         var user = findByTelegram(telegram);
         if (user.getRole().getName().equals(MODER_ROLE)) {
@@ -58,7 +57,6 @@ public class UserServiceImpl implements com.deus.restaurantservice.service.UserS
     }
 
     @Override
-    @Transactional
     public User updateUserInfo(User user, String userName, String password) {
         if (userName.isEmpty()) {
             throw new IncorrectRegistrationDataException(USERNAME_ERROR_MESSAGE);
